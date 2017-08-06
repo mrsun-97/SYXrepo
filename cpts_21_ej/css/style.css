@@ -75,7 +75,7 @@ body a {
 }
 .banner-bottom-bg{
 	background:url(../images/strip1.png);
-	min-height: 157em;
+	min-height: 95em;
 }
 /*-- banner --*/
 .banner{
@@ -88,6 +88,9 @@ body a {
 .banner-top{
 	padding: 0;
 	border-bottom: solid 6px #202020;
+}
+.dropdown2 li > a{
+	font-weight: bold;
 }
 .banner-middle{
 	background:#FFF;
