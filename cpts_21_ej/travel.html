@@ -13,6 +13,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- css -->
 <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
 <!--// css -->
+<style>
+.travel-bg{
+	min-height: 101em;
+}
+</style>
 <script src="js/jquery.min.js"></script>
 <!--fonts-->
 <link href='http://fonts.useso.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -64,8 +69,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="container">
 				<div class="top-nav">
 					<ul class="nav">
-						<li>06 Dec 2010</li>                                          
-						<li class="dropdown1"><a href="#">Sample Page</a>
+						<li>{{time.now}}</li>                                          
+						<li class="dropdown1"><a href="index.html"><strong>Home</strong></a></li>
+						<li class="dropdown1"><a href="#"><strong>Sections</strong></a>
+							<ul class="dropdown2">
+								<li><a href="http://60.205.218.164:8000/section/keji/">kejibu</a></li>
+								<li><a href="http://60.205.218.164:8000/section/waixuan/">waixuan</a></li>
+								<li><a href="http://60.205.218.164:8000/section/shijian/">shijian</a></li>
+								<li><a href="http://60.205.218.164:8000/section/wenti/">wenti</a></li>
+								<li><a href="http://60.205.218.164:8000/section/zongban/">zongban</a></li>
+							</ul>
+						</li>     
+						<li class="dropdown1"><a href="#"><strong>Activity</strong></a>
+							<ul class="dropdown2">
+								<li><a href="lifestyle.html">Lastest Activity</a></li>
+								<li><a href="archives.html">Activity News</a></li>
+							</ul>
+						</li>              			           
+						<li class="dropdown1"><a href="#"><strong>Resource</strong></a>
 							<ul class="dropdown2">
 								<li><a href="lifestyle.html">Blog Page</a></li>
 								<li><a href="archives.html">Archive Page</a></li>
@@ -73,35 +94,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<li><a href="contact.html">Contact Page</a></li>
 							</ul>
 						</li>
-						<li class="dropdown1"><a href="#">Page Layouts</a>
+						<li class="dropdown1"><a href="#"><strong>Practical Link</strong></a>
 							<ul class="dropdown2">
-								<li><a href="lifestyle.html">Blog Page</a></li>
-								<li><a href="archives.html">Archive Page</a></li>
-								<li><a href="fullwidth.html">Full Width Page</a></li>
-								<li><a href="contact.html">Contact Page</a></li>
-							</ul>
-						</li>     
-						<li class="dropdown1"><a href="#">Page Templates</a>
-							<ul class="dropdown2">
-								<li><a href="lifestyle.html">Blog Page</a></li>
-								<li><a href="archives.html">Archive Page</a></li>
-								<li><a href="fullwidth.html">Full Width Page</a></li>
-								<li><a href="contact.html">Contact Page</a></li>
-							</ul>
-						</li>              			           
-						<li class="dropdown1"><a href="#">Theme Colors</a>
-							<ul class="dropdown2">
-								<li><a href="lifestyle.html">Blog Page</a></li>
-								<li><a href="archives.html">Archive Page</a></li>
-								<li><a href="fullwidth.html">Full Width Page</a></li>
-								<li><a href="contact.html">Contact Page</a></li>
-							</ul>
-						</li>            
-						<li><a href="contact.html">Contact</a></li>
+								<li><a href="http://mail.ustc.edu.cn">USTC Mail</a></li>
+								<li><a href="http://www.bb.ustc.edu.cn/">USTC Blackboard</a></li>
+								<li><a href="http://bbs.ustc.edu.cn/">USTC BBS</a></li>
+								<li><a href="http://mis.teach.ustc.edu.cn/">USTC jiaowuchu</a></li>
 					</ul>
 				</div>
 				<div class="nav-right">
-					<p>Subscribe by <a href="#">RSS</a> or <a href="mailto:example@email.com">Emaiil</a> for updates!
+					<p>ban quan suo you:xxxx</p>
 				</div>
 				<div class="clearfix"> </div>
 				<!-- script-for-menu -->
@@ -112,11 +114,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<!-- container -->
 			<div class="container">
 				<div class="head-logo">
-					<a href="index.html"><img src="images/logo.png" alt="" /></a>
+					<a href="index.html"><img src="images/logo.jpg" alt="" width=1140px /></a>
 				</div>
+				<!--
 				<div class="logo-right">
 					<p>468 x 60</p>
 				</div>
+				-->
 				<div class="clearfix"> </div>
 			</div>
 			<!-- //container -->
@@ -134,55 +138,40 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="banner-top">
 								<span class="menu">MENU</span>
 								<ul class="nav banner-nav">
-										<li>06 Dec 2010</li>                                          
-										<li class="dropdown1"><a href="index.html">Sample Page<span>From Around The Globe</span></a>
-											<ul class="dropdown2">
-												<li><a href="lifestyle.html">Blog Page</a></li>
-												<li><a href="archives.html">Archive Page</a></li>
-												<li><a href="fullwidth.html">Full Width Page</a></li>
-												<li><a href="contact.html">Contact Page</a></li>
-											</ul>
-										</li>
-										<li class="dropdown1"><a href="celebrity.html">Celebrity News<span>Juicy Hollywood Gossip</span></a>
-											<ul class="dropdown2">
-												<li><a href="lifestyle.html">Blog Page</a></li>
-												<li><a href="archives.html">Archive Page</a></li>
-												<li><a href="fullwidth.html">Full Width Page</a></li>
-												<li><a href="contact.html">Contact Page</a></li>
-											</ul>
-										</li>     
-										<li class="dropdown1"><a href="404.html">Technology<span>Apps, Internet & Gadgets</span></a>
-											<ul class="dropdown2">
-												<li><a href="lifestyle.html">Blog Page</a></li>
-												<li><a href="archives.html">Archive Page</a></li>
-												<li><a href="fullwidth.html">Full Width Page</a></li>
-												<li><a href="contact.html">Contact Page</a></li>
-											</ul>
-										</li>              			           
-										<li class="dropdown1"><a href="lifestyle.html">Lifestyle Tips<span>Your Health & Happiness</span></a>
-											<ul class="dropdown2">
-												<li><a href="lifestyle.html">Blog Page</a></li>
-												<li><a href="archives.html">Archive Page</a></li>
-												<li><a href="fullwidth.html">Full Width Page</a></li>
-												<li><a href="contact.html">Contact Page</a></li>
-											</ul>
-										</li> 
-										<li class="dropdown1"><a href="celebrity.html">Entertainment<span>Movies, Music & Reviews</span></a>
-											<ul class="dropdown2">
-												<li><a href="lifestyle.html">Blog Page</a></li>
-												<li><a href="archives.html">Archive Page</a></li>
-												<li><a href="fullwidth.html">Full Width Page</a></li>
-												<li><a href="contact.html">Contact Page</a></li>
-											</ul>
-										</li> 
-										<li class="dropdown1"><a href="travel.html">Travel News<span>Travel News, Guides & Tips</span></a>
-											<ul class="dropdown2">
-												<li><a href="lifestyle.html">Blog Page</a></li>
-												<li><a href="archives.html">Archive Page</a></li>
-												<li><a href="fullwidth.html">Full Width Page</a></li>
-												<li><a href="contact.html">Contact Page</a></li>
-											</ul>
-										</li> 
+									<li>{{time.now}}</li>                                          
+									<li class="dropdown1"><a href="Home.html"><strong>Home</strong><span>the home page</span></a></li>
+									<li class="dropdown1"><a href="#"><strong>Sections</strong><span>introduction of our sections</span></a>
+										<ul class="dropdown2">
+											<li><a href="http://60.205.218.164:8000/section/keji/">kejibu</a></li>
+											<li><a href="http://60.205.218.164:8000/section/waixuan/">waixuan</a></li>
+											<li><a href="http://60.205.218.164:8000/section/shijian/">shijian</a></li>
+											<li><a href="http://60.205.218.164:8000/section/wenti/">wenti</a></li>
+											<li><a href="http://60.205.218.164:8000/section/zongban/">zongban</a></li>
+										</ul>
+									</li>     
+									<li class="dropdown1"><a href="#"><strong>Activity</strong><span>enjoy being one of us</span></a>
+										<ul class="dropdown2">
+											<li><a href="lifestyle.html">Lastest Activity</a></li>
+											<li><a href="archives.html">Activity News</a></li>
+										</ul>
+									</li>              			           
+									<li class="dropdown1"><a href="#"><strong>Resource</strong><span>? ? ?</span></a>
+										<ul class="dropdown2">
+											<li><a href="lifestyle.html">Blog Page</a></li>
+											<li><a href="archives.html">Archive Page</a></li>
+											<li><a href="fullwidth.html">Full Width Page</a></li>
+											<li><a href="contact.html">Contact Page</a></li>
+										</ul>
+									</li>
+									<li class="dropdown1"><a href="#"><strong>Practical Link</strong><span>the links you'll use</span></a>
+										<ul class="dropdown2">
+											<li><a href="http://mail.ustc.edu.cn">USTC Mail</a></li>
+											<li><a href="http://www.bb.ustc.edu.cn/">USTC Blackboard</a></li>
+											<li><a href="http://bbs.ustc.edu.cn/">USTC BBS</a></li>
+											<li><a href="http://mis.teach.ustc.edu.cn/">USTC jiaowuchu</a></li>
+										</ul>
+									</li>						
+									<li><a href="contact.html"><strong>Contact</strong><span>that's all</span></a></li>
 								</ul>
 								<script>
 									$("span.menu").click(function(){
@@ -240,108 +229,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<div class="clearfix"> </div>
 										</div>
 										<!-- post -->
-										<div class="post">
-											<h3>Latest Posts</h3>
-											<div class="post-grids">
-												<div class="col-md-4 post-left">
-													<a href="single.html"><img src="images/p1.jpg" alt="" /></a>
-												</div>
-												<div class="col-md-8 post-right">
-													<h4><a href="single.html">Silicon Valley Shows Signs of Dot-Com Frenzy</a></h4>
-													<p class="comments">August 4 2010, <a href="#">8 Comments</a></p>
-													<p class="text">Lorem ipsum ex vix illud nonummy, novum tation et his. At vix scripta patrioque scribentur...</p>
-												</div>
-												<div class="clearfix"> </div>
-											</div>
-											<div class="post-grids">
-												<div class="col-md-4 post-left">
-													<a href="single.html"><img src="images/p2.jpg" alt="" /></a>
-												</div>
-												<div class="col-md-8 post-right">
-													<h4><a href="single.html">Silicon Valley Shows Signs of Dot-Com Frenzy</a></h4>
-													<p class="comments">August 4 2010, <a href="#">8 Comments</a></p>
-													<p class="text">Lorem ipsum ex vix illud nonummy, novum tation et his. At vix scripta patrioque scribentur...</p>
-												</div>
-												<div class="clearfix"> </div>
-											</div>
-											<div class="post-grids">
-												<div class="col-md-4 post-left">
-													<a href="single.html"><img src="images/p3.jpg" alt="" /></a>
-												</div>
-												<div class="col-md-8 post-right">
-													<h4><a href="#">Silicon Valley Shows Signs of Dot-Com Frenzy</a></h4>
-													<p class="comments">August 4 2010, <a href="#">8 Comments</a></p>
-													<p class="text">Lorem ipsum ex vix illud nonummy, novum tation et his. At vix scripta patrioque scribentur...</p>
-												</div>
-												<div class="clearfix"> </div>
-											</div>
-										</div>
 										<!-- //post -->
 									</div>
 									<!-- //banner-bottom-left -->
 									<!-- banner-bottom-right -->
-									<div class="col-md-4 banner-bottom-right">
-										<div class="banner-bottom-left-grids">
-											<div class="search">
-												<form>
-													<input type="text" value="to search, type and hit enter" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'to search, type and hit enter';}" required="">
-												</form>
-											</div>
-											<div class="advertisement">
-												<h3>Advertisement</h3>
-												<p>300 x 250</p>
-											</div>
-											<div class="sponsors">
-												<h3>Sponsors</h3>
-												<div class="sponsors-grids">
-													<div class="sponsors-grid-left">
-														<div class="sponsors-grid">
-															<p>125 x 125</p>
-														</div>
-													</div>
-													<div class="sponsors-grid-left">
-														<div class="sponsors-grid">
-															<p>125 x 125</p>
-														</div>
-													</div>
-													<div class="clearfix"> </div>
-												</div>
-											</div>
-											<div class="video">
-												<h3>Featured Video</h3>
-													<iframe src="https://player.vimeo.com/video/4717303" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-											</div>
-											<div class="twitter">
-												<h3>Twitter</h3>
-												<div class="twitter-info">
-													<p>Genesis Child Themes at Theme Garden – December 5th --> <a href="#">http://bit.ly/ibXdjY #genesiswp <span>#themegarden</span></a>
-													<span class="time"><a href="#">31 minutes ago</a></span></p>
-												</div>
-												<div class="twitter-info">
-													<p>PhotoPro Genesis Child Theme by Creativity Included Launches at <a href="#">http://bit.ly/9fGbq0 - http://eepurl.com/</a>
-													<span class="time"><a href="#">31 minutes ago</a></span></p>
-												</div>
-												<div class="twitter-info">
-													<p>Latest: Genesis Child Themes at Theme Garden – December 5th - Many of you are aware that Jason Schuller of Press75 r... <a href="#">http://ht.ly/1akn8s</a>
-													<span class="time"><a href="#">31 minutes ago</a></span></p>
-												</div>
-												<div class="twitter-info">
-													<p>The Rockstar Guide to Getting More Traffic, Fame, and Success --> <a href="#">http://bit.ly/hCzF69</a>
-													<span class="time"><a href="#">31 minutes ago</a></span></p>
-												</div>
-											</div>
-											<div class="recent-posts">
-												<h3>Recent Posts</h3>
-												<ul>
-													<li><a href="#">Use Prose to Put the Focus on Your Words</a></li>
-													<li><a href="#">Images Add Life to Your Site</a></li>
-													<li><a href="#">What’s a Framework and Why Do I Need One?</a></li>
-													<li><a href="#">7 Tips for Capturing Short Attention Spans</a></li>
-													<li><a href="#">Making Your Blog a Great Place to Hang Out</a></li>
-											</div>
-										</div>
-									</div>
-									<!-- banner-bottom-right -->
+									<!-- //banner-bottom-right -->
 									<div class="clearfix"> </div>
 									<div class="up-arrow">
 										<a class="scroll" href="#home">Back to Top</a>
