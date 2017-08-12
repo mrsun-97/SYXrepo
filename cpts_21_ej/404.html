@@ -15,7 +15,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--// css -->
 <script src="js/jquery.min.js"></script>
 <!--fonts-->
-<link href='http://fonts.useso.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+<!-- <link href='http://fonts.useso.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'> -->
 <!--/fonts-->
 <!-- dropdown -->
 <script src="js/jquery.easydropdown.js"></script>
@@ -64,8 +64,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="container">
 				<div class="top-nav">
 					<ul class="nav">
-						<li>06 Dec 2010</li>                                          
-						<li class="dropdown1"><a href="#">Sample Page</a>
+						<li>{{time.now}}</li>                                          
+						<li class="dropdown1"><a href="Home.html"><strong>Home</strong></a></li>
+						<li class="dropdown1"><a href="#"><strong>Sections</strong></a>
+							<ul class="dropdown2">
+								<li><a href="http://60.205.218.164:8000/section/keji/">科技部</a></li>
+								<li><a href="http://60.205.218.164:8000/section/waixuan/">外宣部</a></li>
+								<li><a href="http://60.205.218.164:8000/section/shijian/">实践部</a></li>
+								<li><a href="http://60.205.218.164:8000/section/wenti/">文体部</a></li>
+								<li><a href="http://60.205.218.164:8000/section/zongban/">综合办公室</a></li>
+							</ul>
+						</li>     
+						<li class="dropdown1"><a href="#"><strong>Activity</strong></a>
+							<ul class="dropdown2">
+								<li><a href="lifestyle.html">Lastest Activity</a></li>
+								<li><a href="archives.html">Activity News</a></li>
+							</ul>
+						</li>              			           
+						<li class="dropdown1"><a href="#"><strong>Resource</strong></a>
 							<ul class="dropdown2">
 								<li><a href="lifestyle.html">Blog Page</a></li>
 								<li><a href="archives.html">Archive Page</a></li>
@@ -73,35 +89,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<li><a href="contact.html">Contact Page</a></li>
 							</ul>
 						</li>
-						<li class="dropdown1"><a href="#">Page Layouts</a>
+						<li class="dropdown1"><a href="#"><strong>Practical Link</strong></a>
 							<ul class="dropdown2">
-								<li><a href="lifestyle.html">Blog Page</a></li>
-								<li><a href="archives.html">Archive Page</a></li>
-								<li><a href="fullwidth.html">Full Width Page</a></li>
-								<li><a href="contact.html">Contact Page</a></li>
+								<li><a href="http://mail.ustc.edu.cn">USTC Mail</a></li>
+								<li><a href="http://www.bb.ustc.edu.cn/">USTC Blackboard</a></li>
+								<li><a href="http://bbs.ustc.edu.cn/">USTC BBS</a></li>
+								<li><a href="http://mis.teach.ustc.edu.cn/">USTC 教务处</a></li>
 							</ul>
-						</li>     
-						<li class="dropdown1"><a href="#">Page Templates</a>
-							<ul class="dropdown2">
-								<li><a href="lifestyle.html">Blog Page</a></li>
-								<li><a href="archives.html">Archive Page</a></li>
-								<li><a href="fullwidth.html">Full Width Page</a></li>
-								<li><a href="contact.html">Contact Page</a></li>
-							</ul>
-						</li>              			           
-						<li class="dropdown1"><a href="#">Theme Colors</a>
-							<ul class="dropdown2">
-								<li><a href="lifestyle.html">Blog Page</a></li>
-								<li><a href="archives.html">Archive Page</a></li>
-								<li><a href="fullwidth.html">Full Width Page</a></li>
-								<li><a href="contact.html">Contact Page</a></li>
-							</ul>
-						</li>            
-						<li><a href="contact.html">Contact</a></li>
+						</li>						
+						<li><a href="contact.html"><strong>Contact</strong></a></li>
 					</ul>
 				</div>
 				<div class="nav-right">
-					<p>Subscribe by <a href="#">RSS</a> or <a href="mailto:example@email.com">Emaiil</a> for updates!
+					<p>版权所有：中国科学技术大学物理学院学生会</p>
 				</div>
 				<div class="clearfix"> </div>
 				<!-- script-for-menu -->
@@ -111,12 +111,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="header-bottom">
 			<!-- container -->
 			<div class="container">
-				<div class="head-logo">
-					<a href="index.html"><img src="images/logo.png" alt="" /></a>
-				</div>
-				<div class="logo-right">
-					<p>468 x 60</p>
-				</div>
 				<div class="clearfix"> </div>
 			</div>
 			<!-- //container -->
@@ -134,55 +128,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="banner-top">
 								<span class="menu">MENU</span>
 								<ul class="nav banner-nav">
-										<li>06 Dec 2010</li>                                          
-										<li class="dropdown1"><a href="index.html">Sample Page<span>From Around The Globe</span></a>
-											<ul class="dropdown2">
-												<li><a href="lifestyle.html">Blog Page</a></li>
-												<li><a href="archives.html">Archive Page</a></li>
-												<li><a href="fullwidth.html">Full Width Page</a></li>
-												<li><a href="contact.html">Contact Page</a></li>
-											</ul>
-										</li>
-										<li class="dropdown1"><a href="celebrity.html">Celebrity News<span>Juicy Hollywood Gossip</span></a>
-											<ul class="dropdown2">
-												<li><a href="lifestyle.html">Blog Page</a></li>
-												<li><a href="archives.html">Archive Page</a></li>
-												<li><a href="fullwidth.html">Full Width Page</a></li>
-												<li><a href="contact.html">Contact Page</a></li>
-											</ul>
-										</li>     
-										<li class="dropdown1"><a href="404.html">Technology<span>Apps, Internet & Gadgets</span></a>
-											<ul class="dropdown2">
-												<li><a href="lifestyle.html">Blog Page</a></li>
-												<li><a href="archives.html">Archive Page</a></li>
-												<li><a href="fullwidth.html">Full Width Page</a></li>
-												<li><a href="contact.html">Contact Page</a></li>
-											</ul>
-										</li>              			           
-										<li class="dropdown1"><a href="lifestyle.html">Lifestyle Tips<span>Your Health & Happiness</span></a>
-											<ul class="dropdown2">
-												<li><a href="lifestyle.html">Blog Page</a></li>
-												<li><a href="archives.html">Archive Page</a></li>
-												<li><a href="fullwidth.html">Full Width Page</a></li>
-												<li><a href="contact.html">Contact Page</a></li>
-											</ul>
-										</li> 
-										<li class="dropdown1"><a href="celebrity.html">Entertainment<span>Movies, Music & Reviews</span></a>
-											<ul class="dropdown2">
-												<li><a href="lifestyle.html">Blog Page</a></li>
-												<li><a href="archives.html">Archive Page</a></li>
-												<li><a href="fullwidth.html">Full Width Page</a></li>
-												<li><a href="contact.html">Contact Page</a></li>
-											</ul>
-										</li> 
-										<li class="dropdown1"><a href="travel.html">Travel News<span>Travel News, Guides & Tips</span></a>
-											<ul class="dropdown2">
-												<li><a href="lifestyle.html">Blog Page</a></li>
-												<li><a href="archives.html">Archive Page</a></li>
-												<li><a href="fullwidth.html">Full Width Page</a></li>
-												<li><a href="contact.html">Contact Page</a></li>
-											</ul>
-										</li> 
+									<li>{{time.now}}</li>                                          
+									<li class="dropdown1"><a href="Home.html"><strong>Home</strong><span>the home page</span></a></li>
+									<li class="dropdown1"><a href="#"><strong>Sections</strong><span>introduction of our sections</span></a>
+										<ul class="dropdown2">
+											<li><a href="http://60.205.218.164:8000/section/keji/">科技部</a></li>
+											<li><a href="http://60.205.218.164:8000/section/waixuan/">外宣部</a></li>
+											<li><a href="http://60.205.218.164:8000/section/shijian/">实践部</a></li>
+											<li><a href="http://60.205.218.164:8000/section/wenti/">文体部</a></li>
+											<li><a href="http://60.205.218.164:8000/section/zongban/">综合办公室</a></li>
+										</ul>
+									</li>     
+									<li class="dropdown1"><a href="#"><strong>Activity</strong><span>enjoy being one of us</span></a>
+										<ul class="dropdown2">
+											<li><a href="lifestyle.html">Lastest Activity</a></li>
+											<li><a href="archives.html">Activity News</a></li>
+										</ul>
+									</li>              			           
+									<li class="dropdown1"><a href="http://60.205.218.164:8000/resource/"><strong>Resource</strong><span>Resource of Phyion</span></a></li>
+									<li class="dropdown1"><a href="#"><strong>Practical Link</strong><span>the links you'll use</span></a>
+										<ul class="dropdown2">
+											<li><a href="http://mail.ustc.edu.cn">USTC Mail</a></li>
+											<li><a href="http://www.bb.ustc.edu.cn/">USTC Blackboard</a></li>
+											<li><a href="http://bbs.ustc.edu.cn/">USTC BBS</a></li>
+											<li><a href="http://mis.teach.ustc.edu.cn/">USTC jiaowuchu</a></li>
+										</ul>
+									</li>						
+									<li><a href="contact.html"><strong>Contact</strong><span>that's all</span></a></li>
 								</ul>
 								<script>
 									$("span.menu").click(function(){
@@ -198,7 +170,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<p>Document or file requested was not found...</p>
 									<h2>404</h2>
 									<div class="back-to-home">
-										<a href="index.html">Go Back to Home</a>
+										<a href="Home.html">Go Back to Home</a>
 									</div>
 								</div>
 								<!-- //technology -->
@@ -215,42 +187,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!-- container -->
 		<div class="container">
 			<div class="footer-grids">
-				<div class="col-md-3 recent-posts footer-left">
-					<h3>Recent Posts</h3>
-					<ul>
-						<li><a href="#">Use Prose to Put the Focus on Words</a></li>
-						<li><a href="#">Images Add Life to Your Site</a></li>
-						<li><a href="#">What’s a WordPress theme Framework?</a></li>
-						<li><a href="#">7 Tips for Short Attention Spans</a></li>
-						<li><a href="#">Make Your Blog a Great Place to Hang</a></li>
-					</ul>
-				</div>
-				<div class="col-md-3 viewport">
-					<h3>About Viewport</h3>
-					<p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet.
-
-						<span>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</span> 
-
-						Aenean lacinia bibendum nulla sed consectetur. Cras mattis consectetur purus sit amet fermentum.
-						Donec id elit non mi porta gravida at eget metus. 
-					</p>
-				</div>
-				<div class="col-md-3 footer-comments">
-					<h3>Comments</h3>
-					<ul>
-						<li>Orman Clark on <a href="#">Sample Post With Threaded Comments</a></li>
-						<li>Orman Clark on <a href="#">Sample Post With Threaded Comments</a></li>
-						<li>Orman Clark on <a href="#">Sample Post With Threaded Comments</a></li>
-						<li>Orman Clark on <a href="#">Sample Post With Threaded Comments</a></li>
-					</ul>
-				</div>
-				<div class="col-md-3 footer-logo">
-					<a href="index.html"><img src="images/f-logo.png" alt="" /></a>
-					<p>Donec sed odio dui. Nulla vitae elit libero, a pharetra augue. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-				</div>
-				<div class="clearfix"> </div>
 				<div class="copyright">
-					<p>Copyright &copy; 2015.Company name All rights reserved.<a target="_blank" href="http://www.cssmoban.com/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a> - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a></p>
+					<p>Copyright &copy; 2015.Company name All rights reserved.&#x7F51;&#x9875;&#x6A21;&#x677F; 中国科学技术大学物理学院学生会</p>
 				</div>
 			</div>
 		</div>
