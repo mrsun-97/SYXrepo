@@ -6,7 +6,7 @@ int main(){
     char c;
     double x=0;
     int l,m,n,i;
-    Linklist a[10];
+    Linklist a[11];
     int CreatPolyn(Linklist *p,int m);
     int PrintPolyn(Linklist p);
     int CopyPolyn(Linklist m ,Linklist *n);
