@@ -1,7 +1,7 @@
 #include<time.h>
 #include"common.h"
 #define ARRLEN 40
-#define MIN 1e-7
+#define MIN 1e-6
 
 double poww(double x,int n){
     int i;
@@ -209,7 +209,7 @@ int PrintPolyn(Linklist p){
         n++;
         if(p->expn!=0){
             if(p->coef>=0)
-                printf("+ %.3gx^%d ",p->coef,p->expn);      // 5.2x^1 + 0.09x^2 - 1x^3 ...
+                printf("+ %.3gx^%d ",p->coef,p->expn);      // example: 5.2x^1 + 0.09x^2 - 1x^3 ...
             else
                 printf("- %.3gx^%d ",-p->coef,p->expn);
         }else
@@ -427,8 +427,7 @@ int DiffPolyn(Linklist Q,int n){
 		}
 		n--;
 	
-	}
-		
+	}	
 	p=Q;
 	//find the first one with 'expn<0'
 	while(p->next && p->next->expn>=0) p=p->next;
@@ -461,10 +460,91 @@ int DEFIntegral(Linklist Q,Linklist *A){
 	printf("input the range of integration bottom&top: ");
 	scanf("%lf %lf",&bottom,&top);getchar();	
 	CopyPolyn(Q,A);
-	UDFIntrgral(*A);
+	UDFIntegral(*A);
 	outcome=Value(*A,top)-Value(*A,bottom);
 	printf("The value is: %.5g \n",outcome);
 	CleanPolyn(A);
 	return 1;
 }
 
+
+int MultPolyn(Linklist *P,Linklist *Q){
+	if(!*P || !*Q){
+		printf("List is empty!\n");
+		exit(0);
+	}
+	Linklist S;			//sum
+	Linklist p=*P,q,s,r;
+	S=(Linklist)malloc(sizeof(LNode));
+	if(!S){
+		printf("Overflow!\n");
+		exit(0);
+	}
+	S->coef=0;
+	S->expn=-1;
+	s=S;
+	s->next=(Linklist)malloc(sizeof(LNode));
+	s=s->next;
+	s->coef=0;
+	s->expn=0;
+	s->next=NULL;		//S: zero polyn
+
+	while(p=p->next){
+		q=*Q;
+		*P=(Linklist)malloc(sizeof(LNode));
+		(*P)->coef=0;
+		(*P)->expn=-1;
+		(*P)->next=NULL;
+		r=*P;
+		while(q=q->next){
+			//*P=*P(i)*Q;
+			r->next=(Linklist)malloc(sizeof(LNode));
+			if(!r->next){
+				printf("Overflow!\n");
+				exit(0);
+			}
+			r=r->next;
+			r->expn=p->expn+q->expn;
+			r->coef=p->coef*q->coef;
+			r->next=NULL;
+		}
+		AddPolyn(&S,P);
+	}
+	*P=S;
+	CleanPolyn(&S);			//Q exists.
+	return PrintPolyn(*P);
+}
+
+
+int DivPolyn(Linklist *P,Linklist *Q){
+	if(!*P || !*Q ||!(*P)->next || !(*Q)->next){
+		printf("List is empty!\n");
+		exit(0);
+	}
+	Linklist S,E;
+	Linklist p,q,s,e;
+	s=(Linklist)malloc(sizeof(LNode));
+	s->coef=0;
+	s->expn=-1;
+	S=s;
+	while((*P)->next->expn>=(*Q)->next->expn){
+		e=(Linklist)malloc(sizeof(LNode));
+		E=e;
+		e->coef=0;
+		e->expn=-1;
+		e->next=(Linklist)malloc(sizeof(LNode));
+		s->next=(Linklist)malloc(sizeof(LNode));
+		e=e->next;
+		s=s->next;
+		s->expn=e->expn=(*P)->next->expn-(*Q)->next->expn;
+		s->coef=e->coef=(*P)->next->coef/(*Q)->next->coef;
+		s->next=e->next=NULL;
+		MultPolyn(&E,Q);
+		SubtractPolyn(P,&E);		//E was deleted here,S is exists.
+	}
+	printf("\nResult:\n");
+	PrintPolyn(S);
+	printf("remains:\n");
+	PrintPolyn(*P);
+	return 1;
+}

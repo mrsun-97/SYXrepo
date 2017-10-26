@@ -21,26 +21,36 @@ int main(){
     int Change(Linklist *A);
     int RandCreatPolyn(Linklist *A);
     void ListArr(Linklist *A);
+	int DiffPolyn(Linklist Q,int n);
+	int UDFIntegral(Linklist Q);
+	int DEFIntegral(Linklist Q,Linklist *A);
+    int MultPolyn(Linklist *P,Linklist *Q);
+	int DivPolyn(Linklist *P,Linklist *Q);
 
-    for(i=0;i<10;i++) a[i]=NULL;
+	for(i=0;i<10;i++) a[i]=NULL;
     do {
         system("clear");
         printf("***************************************************************\n");
         printf("***************************************************************\n");
-        printf("        1. CreatPolyn\n");
-        printf("        2. PrintPolyn\n");
-        printf("        3. CopyPolyn\n");
-        printf("        4. AddPolyn\n");
-        printf("        5. SubtractPolyn\n");
-        printf("        6. Value\n");
-        printf("        7. DestroyPolyn\n");
-        printf("        8. CleanPolyn\n");
-        printf("        9. (1)insert\t(2)delete\t(3)change\n");   
+        printf("		1. CreatPolyn\n");
+        printf("		2. PrintPolyn\n");
+        printf("		3. CopyPolyn\n");
+        printf("		4. AddPolyn\n");
+        printf("		5. SubtractPolyn\n");
+        printf("		6. Value\n");
+        printf("		7. DestroyPolyn\n");
+        printf("		8. CleanPolyn\n");
+        printf("		9. (1)insert\t(2)delete\t(3)change\n");
+		printf("		10.Differential\n");
+		printf("		11.Undefied integral\n");
+		printf("		12.Defined integral\n");
+		printf("		13.MultPolyn\n");
+		printf("		14.DivPolyn\n");
         printf("***************************************************************\n"); 
         printf("***************************************************************\n");
         printf("-->");
         scanf("%d",&l);getchar();
-        
+        ListArr(a);
         switch(l){
             case 1:
                 printf("input array number: ");
@@ -55,30 +65,25 @@ int main(){
                 PrintPolyn(a[n]);
                 break;
             case 2:
-                ListArr(a);
                 printf("printpolyn input number: ");
                 scanf("%d",&n);getchar();
                 PrintPolyn(a[n]);break;
             case 3:
-                ListArr(a);
                 printf("Copy a to b: ");
                 scanf("%d %d",&l,&m);getchar();
                 CopyPolyn(a[l],&a[m]);
                 break;
             case 4:
-                ListArr(a);
                 printf("Add a and b: ");
                 scanf("%d %d",&m,&n);getchar();
                 AddPolyn(&a[m],&a[n]);
                 break;
             case 5:
-                ListArr(a);
                 printf("a minus b: ");
                 scanf("%d %d",&m,&n);getchar();
                 SubtractPolyn(&a[m],&a[n]);
                 break;
             case 6:
-                ListArr(a);
                 printf("workout value: x=");
                 scanf("%lf",&x);getchar();
                 printf("polyn number: ");
@@ -86,7 +91,6 @@ int main(){
                 Value(a[n],x);
                 break;
             case 7:
-                ListArr(a);
                 printf("Destroy polyn number: ");
                 scanf("%d",&m);getchar();
                 printf("expn: ");
@@ -94,7 +98,6 @@ int main(){
                 DestoryPolyn(a[m],n);
                 break;
             case 8:
-                ListArr(a);
                 printf("Clean polyn number: ");
                 scanf("%d",&n);getchar();
                 CleanPolyn(&a[n]);
@@ -125,11 +128,37 @@ int main(){
                 }while(n!=10);
                 break;
             }
-            default :printf("Invalid operation!\n");            
+			case 10:
+				printf("DifferentialPolyn, number&times:");
+				scanf("%d %d",&m,&n);getchar();
+				DiffPolyn(a[m],n);
+				break;
+			case 11:
+				printf("UDFIntegral: number:");
+				scanf("%d",&n);getchar();
+				UDFIntegral(a[n]);
+				break;
+			case 12:
+				printf("DEFIntegral: number:");
+				scanf("%d",&n);getchar();
+				DEFIntegral(a[n],&a[10]);
+				break;
+			case 13:
+				printf("Mult: number1 & number2:");
+				scanf("%d %d",&m,&n);getchar();
+				MultPolyn(&a[m],&a[n]);
+				CleanPolyn(&a[n]);
+				break;
+			case 14:
+				printf("Div: number1 & number2:");
+				scanf("%d %d",&m,&n);
+				DivPolyn(&a[m],&a[n]);
+				break;
+            default :
+				printf("Invalid operation!\n");            
         }//endswitch
         fflush(stdin);
         getchar();getchar();
-    }while(1<=l&&l<=9);
-printf("test_main_2\n");
+    }while(1<=l&&l<=14);
     return 0;
 }
