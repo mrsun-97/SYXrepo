@@ -27,7 +27,7 @@ int main(){
     int MultPolyn(Linklist *P,Linklist *Q);
 	int DivPolyn(Linklist *P,Linklist *Q);
 
-	for(i=0;i<10;i++) a[i]=NULL;
+	for(i=0;i<11;i++) a[i]=NULL;
     do {
         system("clear");
         printf("***************************************************************\n");
@@ -160,5 +160,6 @@ int main(){
         fflush(stdin);
         getchar();getchar();
     }while(1<=l&&l<=14);
-    return 0;
+    printf("Exit.\n");
+	return 0;
 }

@@ -32,7 +32,7 @@ int order(Linklist Q){
         return 0;
     }
     int i=0,j,m,done=0;
-    Linklist p=Q,q=Q->next;
+    Linklist p,q=Q->next;
     while(q->next){
         if(q->expn<=q->next->expn || abs(q->coef)<MIN){
             done=1;
@@ -49,6 +49,7 @@ int order(Linklist Q){
     while(i<2*ARRLEN)
         arr[i++]=NULL;
     i=0;
+	p=Q;
     while(p->next){                 //put in array
         arr[i]=p->next;
         p=p->next;
@@ -72,7 +73,7 @@ int order(Linklist Q){
             arr[j]=NULL;
         }
         else{
-            if(abs(arr[i]->coef<MIN)){
+            if(abs(arr[i]->coef)<MIN){
                 free(arr[i]);
                 arr[i]=NULL;
             }
@@ -122,7 +123,7 @@ int RandCreatPolyn(Linklist *p){     //(&a[n],m)
         if(!s) exit(-1);
         q->next=s;
         s->coef=(double)rand()/200000000;
-        s->expn=(unsigned int)rand()%21;
+        s->expn=(int)abs(rand()%21);
         s->next=NULL;
         q=s;
     }
@@ -332,7 +333,7 @@ int DestoryPolyn(Linklist Q,int n){                 //delete only one term
 
 
 int CleanPolyn(Linklist *A){
-    if(!*A) exit(0);
+	if(!*A) return(0);
     Linklist q=*A,p=*A;
     do {
         p=p->next;
@@ -417,13 +418,13 @@ int DiffPolyn(Linklist Q,int n){
 		printf("please check the number\n");
 		exit(0);
 	}else if(n==0) return 1;
-
 	Linklist p;
 	while(n!=0){
 		p=Q;
 		while(p=p->next){
 			p->coef*=p->expn;
 			p->expn--;
+printf("test_diff\n");
 		}
 		n--;
 	
@@ -458,11 +459,12 @@ int DEFIntegral(Linklist Q,Linklist *A){
 	}
 	double bottom,top,outcome;
 	printf("input the range of integration bottom&top: ");
-	scanf("%lf %lf",&bottom,&top);getchar();	
+	scanf("%lf %lf",&bottom,&top);getchar();
+	CleanPolyn(A);
 	CopyPolyn(Q,A);
 	UDFIntegral(*A);
 	outcome=Value(*A,top)-Value(*A,bottom);
-	printf("The value is: %.5g \n",outcome);
+	printf("\nThe value is: %.5g \n",outcome);
 	CleanPolyn(A);
 	return 1;
 }
@@ -490,12 +492,12 @@ int MultPolyn(Linklist *P,Linklist *Q){
 	s->next=NULL;		//S: zero polyn
 
 	while(p=p->next){
-		q=*Q;
 		*P=(Linklist)malloc(sizeof(LNode));
 		(*P)->coef=0;
 		(*P)->expn=-1;
 		(*P)->next=NULL;
 		r=*P;
+		q=*Q;
 		while(q=q->next){
 			//*P=*P(i)*Q;
 			r->next=(Linklist)malloc(sizeof(LNode));
@@ -510,8 +512,7 @@ int MultPolyn(Linklist *P,Linklist *Q){
 		}
 		AddPolyn(&S,P);
 	}
-	*P=S;
-	CleanPolyn(&S);			//Q exists.
+	*P=S;			//Q exists.
 	return PrintPolyn(*P);
 }
 
@@ -537,6 +538,7 @@ int DivPolyn(Linklist *P,Linklist *Q){
 		e=e->next;
 		s=s->next;
 		s->expn=e->expn=(*P)->next->expn-(*Q)->next->expn;
+		if((*Q)->next->coef==0) exit(0);
 		s->coef=e->coef=(*P)->next->coef/(*Q)->next->coef;
 		s->next=e->next=NULL;
 		MultPolyn(&E,Q);
