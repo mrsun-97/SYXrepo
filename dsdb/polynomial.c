@@ -19,13 +19,14 @@ int main(){
     int Insert(Linklist *A);
     int Delete(Linklist *A);
     int Change(Linklist *A);
-    int RandCreatPolyn(Linklist *A);
+    int RandCreatPolyn(Linklist *A,int m);
     void ListArr(Linklist *A);
 	int DiffPolyn(Linklist Q,int n);
 	int UDFIntegral(Linklist Q);
-	int DEFIntegral(Linklist Q,Linklist *A);
+	int DEFIntegral(Linklist Q);
     int MultPolyn(Linklist *P,Linklist *Q);
 	int DivPolyn(Linklist *P,Linklist *Q);
+	int PowPolyn(Linklist *P,int k);
 
 	for(i=0;i<11;i++) a[i]=NULL;
     do {
@@ -50,6 +51,7 @@ int main(){
         printf("***************************************************************\n");
         printf("-->");
         scanf("%d",&l);getchar();
+		if(l<0 || l>15) continue;
         ListArr(a);
         switch(l){
             case 1:
@@ -57,31 +59,30 @@ int main(){
                 scanf("%d",&n);getchar();
                 printf("input mumbers: ");
                 scanf("%d",&m);getchar();
-                if(m==-1){
-                    RandCreatPolyn(&a[n]);
+                if(m<0){
+                    RandCreatPolyn(&a[n],m);
                 }else{
                     CreatPolyn(&a[n],m);
                 }
-                PrintPolyn(a[n]);
                 break;
             case 2:
                 printf("printpolyn input number: ");
                 scanf("%d",&n);getchar();
-                PrintPolyn(a[n]);break;
-            case 3:
+            	break;
+			case 3:
                 printf("Copy a to b: ");
-                scanf("%d %d",&l,&m);getchar();
-                CopyPolyn(a[l],&a[m]);
+                scanf("%d %d",&n,&m);getchar();
+                CopyPolyn(a[n],&a[m]);
                 break;
             case 4:
                 printf("Add a and b: ");
-                scanf("%d %d",&m,&n);getchar();
-                AddPolyn(&a[m],&a[n]);
+                scanf("%d %d",&n,&m);getchar();
+                AddPolyn(&a[n],&a[m]);
                 break;
             case 5:
                 printf("a minus b: ");
-                scanf("%d %d",&m,&n);getchar();
-                SubtractPolyn(&a[m],&a[n]);
+                scanf("%d %d",&n,&m);getchar();
+                SubtractPolyn(&a[n],&a[m]);
                 break;
             case 6:
                 printf("workout value: x=");
@@ -92,10 +93,10 @@ int main(){
                 break;
             case 7:
                 printf("Destroy polyn number: ");
-                scanf("%d",&m);getchar();
-                printf("expn: ");
                 scanf("%d",&n);getchar();
-                DestoryPolyn(a[m],n);
+                printf("expn: ");
+                scanf("%d",&m);getchar();
+                DestoryPolyn(a[n],m);
                 break;
             case 8:
                 printf("Clean polyn number: ");
@@ -130,8 +131,8 @@ int main(){
             }
 			case 10:
 				printf("DifferentialPolyn, number&times:");
-				scanf("%d %d",&m,&n);getchar();
-				DiffPolyn(a[m],n);
+				scanf("%d %d",&n,&m);getchar();
+				DiffPolyn(a[n],m);
 				break;
 			case 11:
 				printf("UDFIntegral: number:");
@@ -141,25 +142,31 @@ int main(){
 			case 12:
 				printf("DEFIntegral: number:");
 				scanf("%d",&n);getchar();
-				DEFIntegral(a[n],&a[10]);
+				DEFIntegral(a[n]);
 				break;
 			case 13:
 				printf("Mult: number1 & number2:");
-				scanf("%d %d",&m,&n);getchar();
-				MultPolyn(&a[m],&a[n]);
-				CleanPolyn(&a[n]);
+				scanf("%d %d",&n,&m);getchar();
+				MultPolyn(&a[n],&a[m]);
+				CleanPolyn(&a[m]);
 				break;
 			case 14:
 				printf("Div: number1 & number2:");
-				scanf("%d %d",&m,&n);
-				DivPolyn(&a[m],&a[n]);
+				scanf("%d %d",&n,&m);getchar();
+				DivPolyn(&a[n],&a[m]);
+				//CLeanPolyn(&a[m]);
 				break;
+			case 15:
+				printf("pow(a[n],k) n&k: ");
+				scanf("%d %d",&n,&k);getchar();
+				PowPolyn(&a[n],k);
             default :
 				printf("Invalid operation!\n");            
         }//endswitch
+		if(l!=14) PrintPolyn(a[n]);
         fflush(stdin);
         getchar();getchar();
-    }while(1<=l&&l<=14);
+    }while(l!=0);
     printf("Exit.\n");
 	return 0;
 }

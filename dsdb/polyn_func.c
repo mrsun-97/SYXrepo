@@ -102,15 +102,13 @@ int order(Linklist Q){
     return 1;
 }
 
-int RandCreatPolyn(Linklist *p){     //(&a[n],m)
+int RandCreatPolyn(Linklist *p,int m){     //(&a[n],m)
     if(*p){
         printf("List is not empty!\n");
         exit(0);
     }
     srand((unsigned int)time(NULL));
-    int i,j,m;
-    printf("input generate number: ");
-    scanf("%d",&m);
+    int i,j;
     Linklist q,s;   
     q=(Linklist)malloc(sizeof(LNode));
     if(!q) exit(-1);
@@ -118,6 +116,7 @@ int RandCreatPolyn(Linklist *p){     //(&a[n],m)
     q->expn=-1;
     q->coef=0;
     *p=q;
+	m=abs(m);
     for(i=0;i<m;i++){
         s=(Linklist)malloc(sizeof(LNode));
         if(!s) exit(-1);
@@ -272,7 +271,7 @@ int AddPolyn(Linklist *m,Linklist *n){
     free(*n);
     *n=NULL;
     order(*m);
-    return PrintPolyn(*m);
+    return 1;
 }
 
 
@@ -311,6 +310,9 @@ int DestoryPolyn(Linklist Q,int n){                 //delete only one term
         printf("Empty list!\n");
         exit(0);
     }
+	if(n<0){
+		printf("The number is not proper.\n")
+	}
     Linklist p=Q,s;
     while(p->next && p->next->expn!=n) p=p->next;
     if(!p->next){
@@ -328,8 +330,9 @@ int DestoryPolyn(Linklist Q,int n){                 //delete only one term
             free(s);
         }
     }
-    return PrintPolyn(Q);
+	return 1;
 }
+
 
 
 int CleanPolyn(Linklist *A){
@@ -432,13 +435,14 @@ printf("test_diff\n");
 	p=Q;
 	//find the first one with 'expn<0'
 	while(p->next && p->next->expn>=0) p=p->next;
-	CleanPolyn(&(p->next));			//cleanpolyn() deletes the items which have negative exponent.print 'finished'.	
-	return PrintPolyn(Q);
+	CleanPolyn(&(p->next));			//delete the items which have negative exponent.	
+	return 1;
 }
 
 
 int UDFIntegral(Linklist Q){
 	if(!Q || !Q->next){
+    scanf("%d",&m);
 		printf("Empty list!\n");
 		exit(0);
 	}
@@ -447,12 +451,11 @@ int UDFIntegral(Linklist Q){
 		p->expn++;
 		p->coef/=p->expn;
 	}
-	PrintPolyn(Q);
 	return 1;
 }
 
 
-int DEFIntegral(Linklist Q,Linklist *A){
+int DEFIntegral(Linklist Q){
 	if(!Q || !Q->next){
 		printf("Empty list\n");
 		exit(0);
@@ -460,12 +463,12 @@ int DEFIntegral(Linklist Q,Linklist *A){
 	double bottom,top,outcome;
 	printf("input the range of integration bottom&top: ");
 	scanf("%lf %lf",&bottom,&top);getchar();
-	CleanPolyn(A);
-	CopyPolyn(Q,A);
-	UDFIntegral(*A);
-	outcome=Value(*A,top)-Value(*A,bottom);
+	Linklist C;
+	CopyPolyn(Q,&C);
+	UDFIntegral(C);
+	outcome=Value(C,top)-Value(C,bottom);
 	printf("\nThe value is: %.5g \n",outcome);
-	CleanPolyn(A);
+	CleanPolyn(&C);
 	return 1;
 }
 
@@ -512,8 +515,8 @@ int MultPolyn(Linklist *P,Linklist *Q){
 		}
 		AddPolyn(&S,P);
 	}
-	*P=S;			//Q exists.
-	return PrintPolyn(*P);
+	*P=S;				//Q exists.
+	return 1;
 }
 
 
@@ -542,11 +545,36 @@ int DivPolyn(Linklist *P,Linklist *Q){
 		s->coef=e->coef=(*P)->next->coef/(*Q)->next->coef;
 		s->next=e->next=NULL;
 		MultPolyn(&E,Q);
-		SubtractPolyn(P,&E);		//E was deleted here,S is exists.
+		SubtractPolyn(P,&E);		//E was deleted here,S exists.
 	}
+	CleanPolyn(Q);
+	*Q=S;
 	printf("\nResult:\n");
 	PrintPolyn(S);
-	printf("remains:\n");
+	printf("Remainder:\n");
 	PrintPolyn(*P);
 	return 1;
 }
+
+
+int PowPolyn(Linklist *P,int k){
+	if(!*P || !(*P)->next){
+		printf("Empty list\n");
+		exit(0);
+	}
+	if(k<0){
+		printf("Invalid value!\n");
+		exit(0);
+	}else if(k==0) return 1;
+
+	Linklist C=NULL;
+	int i;
+	CopyPolyn(*P,&C);
+	for(i=1;i<k;i++)
+		MultPolyn(P,&C);
+	CleanPolyn(&C);
+	return 1;
+}
+
+
+
