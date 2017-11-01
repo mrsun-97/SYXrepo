@@ -27,12 +27,13 @@ int main(){
     int MultPolyn(Linklist *P,Linklist *Q);
 	int DivPolyn(Linklist *P,Linklist *Q);
 	int PowPolyn(Linklist *P,int k);
+	int Least_Greatest(Linklist *P,Linklist *Q);
 
 	for(i=0;i<11;i++) a[i]=NULL;
     do {
         system("clear");
-        printf("***************************************************************\n");
-        printf("***************************************************************\n");
+        printf("******************************************************************\n");
+        printf("******************************************************************\n");
         printf("		1. CreatPolyn\n");
         printf("		2. PrintPolyn\n");
         printf("		3. CopyPolyn\n");
@@ -47,11 +48,13 @@ int main(){
 		printf("		12.Defined integral\n");
 		printf("		13.MultPolyn\n");
 		printf("		14.DivPolyn\n");
-        printf("***************************************************************\n"); 
-        printf("***************************************************************\n");
+		printf("		15.Power\n");
+		printf("		16.Least&Greatest common polyn\n");
+        printf("******************************************************************\n"); 
+        printf("******************************************************************\n");
         printf("-->");
         scanf("%d",&l);getchar();
-		if(l<0 || l>15) continue;
+		if(l<0 || l>16) continue;
         ListArr(a);
         switch(l){
             case 1:
@@ -148,7 +151,7 @@ int main(){
 				printf("Mult: number1 & number2:");
 				scanf("%d %d",&n,&m);getchar();
 				MultPolyn(&a[n],&a[m]);
-				CleanPolyn(&a[m]);
+				//CleanPolyn(&a[m]);
 				break;
 			case 14:
 				printf("Div: number1 & number2:");
@@ -158,15 +161,21 @@ int main(){
 				break;
 			case 15:
 				printf("pow(a[n],k) n&k: ");
-				scanf("%d %d",&n,&k);getchar();
-				PowPolyn(&a[n],k);
+				scanf("%d %d",&n,&m);getchar();
+				PowPolyn(&a[n],m);
+				break;
+			case 16:
+				printf("printf polyn number 1&2: ");
+				scanf("%d %d",&m,&n);
+				Least_Greatest(&a[m],&a[n]);
+				break;
             default :
 				printf("Invalid operation!\n");            
-        }//endswitch
-		if(l!=14) PrintPolyn(a[n]);
+        }//end switch
+		if(l!=2 && l!=8 && l!=14 && l!=16) PrintPolyn(a[n]);
         fflush(stdin);
         getchar();getchar();
-    }while(l!=0);
+    }while(1<=l && l<=16);
     printf("Exit.\n");
 	return 0;
 }

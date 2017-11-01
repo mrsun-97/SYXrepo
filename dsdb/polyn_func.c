@@ -40,10 +40,10 @@ int order(Linklist Q){
         }
         q=q->next;
     }
-    if(!done){
+    /* if(!done){
         printf("order:Nothing more to do.\n");
         return 1;
-    }
+    } */
 //printf("test_order_1\n");
     Linklist arr[2*ARRLEN];
     while(i<2*ARRLEN)
@@ -80,7 +80,10 @@ int order(Linklist Q){
             i=j;
         }
     }
-
+	if(abs(arr[i]->coef)<MIN){
+		free(arr[i]);
+		arr[i]=NULL;
+	}
     //feed back data
     p=Q;
     for(i=0;i<m;i++){
@@ -90,7 +93,7 @@ int order(Linklist Q){
         }
         p->next=NULL;
     }
-    if(!Q->next){                   //if it's empty, change it to zero polynomial.
+    if(!Q->next){                   //if Q is empty, change it to zero polynomial.
         q=(Linklist)malloc(sizeof(LNode));
         if(!q) exit(-1);
         Q->next=q;
@@ -98,7 +101,7 @@ int order(Linklist Q){
         q->expn=0;
         q->next=NULL;
     }
-    printf("order:finished\n");
+//printf("order:finished\n");
     return 1;
 }
 
@@ -311,7 +314,7 @@ int DestoryPolyn(Linklist Q,int n){                 //delete only one term
         exit(0);
     }
 	if(n<0){
-		printf("The number is not proper.\n")
+		printf("The number is not proper.\n");
 	}
     Linklist p=Q,s;
     while(p->next && p->next->expn!=n) p=p->next;
@@ -373,7 +376,7 @@ int Insert(Linklist *A){
 }
 
 
-int Delete(Linklist *A){
+int Delete(Linklist *A){	//the same as DestoryPolyn()
     printf("  pass\n");
     return 1;
 }
@@ -442,7 +445,6 @@ printf("test_diff\n");
 
 int UDFIntegral(Linklist Q){
 	if(!Q || !Q->next){
-    scanf("%d",&m);
 		printf("Empty list!\n");
 		exit(0);
 	}
@@ -502,7 +504,6 @@ int MultPolyn(Linklist *P,Linklist *Q){
 		r=*P;
 		q=*Q;
 		while(q=q->next){
-			//*P=*P(i)*Q;
 			r->next=(Linklist)malloc(sizeof(LNode));
 			if(!r->next){
 				printf("Overflow!\n");
@@ -531,7 +532,7 @@ int DivPolyn(Linklist *P,Linklist *Q){
 	s->coef=0;
 	s->expn=-1;
 	S=s;
-	while((*P)->next->expn>=(*Q)->next->expn){
+	while((*P)->next->expn>(*Q)->next->expn){
 		e=(Linklist)malloc(sizeof(LNode));
 		E=e;
 		e->coef=0;
@@ -541,14 +542,36 @@ int DivPolyn(Linklist *P,Linklist *Q){
 		e=e->next;
 		s=s->next;
 		s->expn=e->expn=(*P)->next->expn-(*Q)->next->expn;
-		if((*Q)->next->coef==0) exit(0);
+		if((*Q)->next->coef==0){
+			printf("x/0 panic!\n");
+			exit(0);
+		}
+		s->coef=e->coef=(*P)->next->coef/(*Q)->next->coef;
+		s->next=e->next=NULL;		//  S==E
+		MultPolyn(&E,Q);			//now E's first term equals to P's. 
+		SubtractPolyn(P,&E);		//E was cleaned here,S exists.
+	}
+
+	//check again
+	if((*P)->next->expn==(*Q)->next->expn){
+		e=(Linklist)malloc(sizeof(LNode));
+		E=e;
+		e->coef=0;
+		e->expn=-1;
+		e->next=(Linklist)malloc(sizeof(LNode));
+		s->next=(Linklist)malloc(sizeof(LNode));
+		e=e->next;
+		s=s->next;
+		s->expn=e->expn=(*P)->next->expn-(*Q)->next->expn;
+		if((*Q)->next->coef==0){
+			printf("x/0 panic!!\n");
+			exit(0);
+		}
 		s->coef=e->coef=(*P)->next->coef/(*Q)->next->coef;
 		s->next=e->next=NULL;
-		MultPolyn(&E,Q);
-		SubtractPolyn(P,&E);		//E was deleted here,S exists.
+		MultPolyn(&E,Q); 
+		SubtractPolyn(P,&E);
 	}
-	CleanPolyn(Q);
-	*Q=S;
 	printf("\nResult:\n");
 	PrintPolyn(S);
 	printf("Remainder:\n");
@@ -577,4 +600,38 @@ int PowPolyn(Linklist *P,int k){
 }
 
 
-
+int Least_Greatest(Linklist *P,Linklist *Q){
+	if(!*P || !*Q || !(*P)->next || !(*Q)->next){
+		printf("Empty list!\n");
+		return 0;
+	}
+	Linklist *A,*B;
+	Linklist p,q,C=NULL,D=NULL;
+	CopyPolyn(*P,&C);
+	CopyPolyn(*Q,&D);
+	if((*Q)->next->expn > (*P)->next->expn){
+		p=*P;
+		*P=*Q;
+		*Q=p;
+	}
+	q=(*Q)->next;
+	while(q->next->expn!=0 || abs(q->coef)>=MIN){
+		DivPolyn(P,Q);
+		p=*P;
+		*P=*Q;
+		q=*Q=p;
+	}
+	p=(*P)->next;
+	double e=p->coef;
+	while(p){
+		p->coef/=e;
+		p=p->next;
+	}
+	printf("Greatest common factor:\n");
+	PrintPolyn(*P);
+	MultPolyn(&C,&D);
+	DivPolyn(&C,P);
+	printf("(Least common multiple is the last 'result')\n");
+	CleanPolyn(&C);CleanPolyn(&D);
+	return 1;
+}
