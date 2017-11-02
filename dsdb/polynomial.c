@@ -31,7 +31,8 @@ int main(){
 
 	for(i=0;i<11;i++) a[i]=NULL;
     do {
-        system("clear");
+		printf("\n");
+        //system("clear");
         printf("******************************************************************\n");
         printf("******************************************************************\n");
         printf("		1. CreatPolyn\n");
@@ -107,7 +108,7 @@ int main(){
                 CleanPolyn(&a[n]);
                 break;
             case 9:{
-                do {
+                //do {
                     ListArr(a);
                     printf("Change polyn\n");
                     printf("a: insert\nb: delete\nc:change\n-->");
@@ -129,7 +130,7 @@ int main(){
                             n=10;
                     }
                         
-                }while(n!=10);
+                //}while(n!=10);
                 break;
             }
 			case 10:
