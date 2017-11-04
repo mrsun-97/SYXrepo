@@ -1,4 +1,13 @@
 #include"stack1.h"
+#include<math.h>
+
+int InitStack(SQStack *S);
+
+Stype GetTop(SQStack S);
+int Push(SQStack *S,Stype e);
+int Pop(SQStack *S,Stype *e);
+int StackEmpty(SQStack S);
+
 
 static double arr[50]={0};
 static int end=1; 
@@ -73,6 +82,37 @@ char Precede(char a,char b){
 	}
 }
 
+int trans(char s){
+	return (int)(s-'0');
+}
+
+double operate(double a,char theta,double b){
+	switch(theta){
+			case '+': return a+b;
+			case '-': return a-b;
+			case '*': return a*b;
+			case '/': return a/b;
+			case '^': return pow(a,b);
+			case 's':
+				arr[end++]=a;
+				return sin(b);
+			case 'c':
+				arr[end++]=a;
+				return cos(b);
+			case 't':
+				arr[end++]=a;
+				return tan(b);
+			case 'n':
+				arr[end++]=a;
+				return log(b);
+			case 'g':
+				arr[end++]=a;
+				return log10(b);
+			//case 
+			default :exit(0);
+	}
+}
+
 int main(){
 	
 	SQStack OP;
@@ -117,11 +157,11 @@ int main(){
 		}//end if
 		else{
 			if(c>='a' && c<='z'){
-				if(c='s' || c='c' || c='t'){	//sin cos tan
+				if(c=='s' || c=='c' || c=='t'){	//sin cos tan
 					Push(&OP,c);
 					do{
 						c=getchar();
-					}while(c<'a' || c>'z')
+					}while(c<'a' || c>'z');
 				}
 				else if(c=='l'){				//ln or lg
 					c=getchar();
@@ -132,7 +172,7 @@ int main(){
 				}
 				else exit(0);
 			}else if(isOP(c)){
-				switch(precede(GetTop(OP),c)){
+				switch(Precede(GetTop(OP),c)){
 					case '<':
 						Push(&OP,c);c=getchar();
 						break;
@@ -140,10 +180,10 @@ int main(){
 						Pop(&OP,&x);c=getchar();
 						break;
 					case '>':
-						pop(&OP,&x);
+						Pop(&OP,&x);
 						b=arr[--end];
 						a=arr[--end];
-						arr[end++]=Operate(a,x,b);
+						arr[end++]=operate(a,x,b);
 						break;
 				}
 			}else{
@@ -151,7 +191,6 @@ int main(){
 				exit(0);
 			}
 		}
-
 	}
 	printf("%g\n",arr[--end]);
 	return 0;

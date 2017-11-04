@@ -1,7 +1,7 @@
 #include"stack1.h"
 
 int InitStack(SQStack *S){
-	S->base=(Stype)malloc(STACK_INIT_SIZE*sizeof(Stype));
+	S->base=(Stype *)malloc(STACK_INIT_SIZE*sizeof(Stype));
 	if(!S->base){
 		printf("Overflow!\n");
 		exit(-1);
@@ -11,24 +11,25 @@ int InitStack(SQStack *S){
 	return 1;
 }
 
-int GetTop(SQStack *S,Stype *e){
-	if(S->top==S->base){
+Stype GetTop(SQStack S){
+	Stype e;
+	if(S.top==S.base){
 		printf("Empty stack!\n");
 		return 0;
 	}
-	*e=*(S->top-1);
-	return 1;
+	e=*(S.top-1);
+	return e;
 }
 
 int Push(SQStack *S,Stype e){
-	if(S->top-S->base >= S.stacksize){
-		S->base=(Stype)realloc(S->base,(S.stacksize+STACKINCREMENT)*sizeof(Stype));
-		if(!s->base){
+	if(S->top-S->base >= S->stacksize){
+		S->base=(Stype *)realloc(S->base,(S->stacksize+STACKINCREMENT)*sizeof(Stype));
+		if(!S->base){
 			printf("Overflow!\n");
 			exit(-1);
 		}
 		S->top=S->base+S->stacksize;
-		S->stacksize+=STACKINCEMENT;
+		S->stacksize+=STACKINCREMENT;
 	}
 	*S->top++ =e;
 	return 1;
