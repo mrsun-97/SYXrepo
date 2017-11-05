@@ -115,26 +115,27 @@ int main(){
 	InitStack(&OP);
 	Push(&OP,'#');
 	fflush(stdin);
-	int Int,isminus,i;
-	double H,Dec,a,b;
+	int Int,isnegtv=0,i;
+	char d;
+	double H,Dec,a,b,mid;
 	c=getchar();
 	
 	while(c!='#' || GetTop(OP)!='#'){
 		//isdigital
-		printf("%c\n",c);
+		printf("%d\n",c);
 		if(c>='0' && c<='9'){
-			printf("%d_1\n",c);
+			isnegtv=0;
+loop:	printf("%c_1\n",c);
 			Int=0;
 			H=10;
 			Dec=0;
 			do{
 				Int=10*Int+trans(c);
 				c=getchar();
-				printf("Int=%d \n",Int);
 			}while(c>='0' && c<='9');
 			//meet '.'
 			if(c!='.'){
-				arr[end++]=(double)Int;
+				arr[end++]=(double)Int*(isnegtv?(-1):1);
 			}else{
 				c=getchar();
 				while(c>='0' && c<='9'){
@@ -142,7 +143,8 @@ int main(){
 					H*=10;
 					c=getchar();
 				}
-				arr[end++]=(double)Int+Dec;	
+				arr[end++]=((double)Int+Dec)*(isnegtv?(-1):1);
+				isnegtv=0;
 			}
 			printf("--begin--\n");
 			for(i=0;i<end;i++){
@@ -154,15 +156,26 @@ int main(){
 		else if(c==' ' || c=='\n')
 			c=getchar();
 		else{
-			printf("%d_2\n",c);
+			printf("%c_2\n",c);
+			//c=getchar()
+			if(c=='+' || c=='-'){
+				isnegtv=(c=='-'?1:0);
+				d=c;
+				c=getchar();
+				if(c>='0' && c<='9'){goto loop;}	//<== use 'goto' 
+				else{
+					stdin->_IO_read_ptr--;
+					c=d;
+				}
+			}
 			if(c>='a' && c<='z'){
-				if(c=='s' || c=='c' || c=='t'){	//sin cos tan
+				if(c=='s' || c=='c' || c=='t'){		//sin cos tan
 					Push(&OP,c);
 					do{
 						c=getchar();
 					}while(c>='a' && c<='z');
 				}
-				else if(c=='l'){				//ln or lg
+				else if(c=='l'){					//ln or lg
 					c=getchar();
 					if(c=='n' || c=='g')
 						Push(&OP,c);
@@ -185,8 +198,8 @@ int main(){
 						Pop(&OP,&x);
 						b=arr[--end];
 						a=arr[--end];
-						x=operate(a,x,b);
-						arr[end++]=x;
+						mid=operate(a,x,b);
+						arr[end++]=mid;
 						printf("--begin--\n");
 						for(i=0;i<end;i++){
 							printf("%g\n",arr[i]);
@@ -200,7 +213,7 @@ int main(){
 			}
 		}
 	}//end while
-	printf("%.3lf\n",
+	printf("Result: %.3g\n",
 			/*(double)(int)(arr[--end]+0.5)*/
 		   arr[--end]);
 	return 0;
