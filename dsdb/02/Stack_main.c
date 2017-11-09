@@ -156,15 +156,20 @@ loop:	printf("%c_1\n",c);
 		else if(c==' ' || c=='\n')
 			c=getchar();
 		else{
-			printf("%c_2\n",c);
+			printf("%c_2\n",c);						// '-'
 			//c=getchar()
 			if(c=='+' || c=='-'){
 				isnegtv=(c=='-'?1:0);
 				d=c;
+				stdin->_IO_read_ptr-=2;
 				c=getchar();
-				if(c>='0' && c<='9'){goto loop;}	//<== use 'goto' 
+				if(c!=')' && isOP(c)){
+					getchar();
+					c=getchar();
+					goto loop;
+				}	//<== use 'goto' 
 				else{
-					stdin->_IO_read_ptr--;
+					stdin->_IO_read_ptr++;
 					c=d;
 				}
 			}

@@ -1,5 +1,6 @@
 #pragma once
 #include<stdio.h>
+#include<stdlib.h>
 
 typedef char *String;
 typedef String *HuffmanCode;
@@ -25,6 +26,6 @@ typedef struct {
 }Dict;
 
 typedef struct {
-	HuffmanCode HC;
-	char *ch
-}Hashlist;
+	char code[8];
+	char letter;
+}HashDict,*Hashlist;
