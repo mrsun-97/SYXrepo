@@ -106,9 +106,9 @@ char trans(char *q){
 	return a;
 }
 
-void output(Hashlist H,FILE *fp,char *name){
+int output(Hashlist H,FILE *fp,char *name){
 	char queue[8],c,*fc;
-	int i,j;
+	int i,j,last,size;
 	FILE *fr;
 	if((fr=fopen(name,"w"))==NULL){
 		printf("Failed to make file '%s'\n",name);
@@ -116,25 +116,30 @@ void output(Hashlist H,FILE *fp,char *name){
 	}
 	c=fgetc(fp);
 	i=0;
+	size=0;
 	while(!feof(fp)){
 		j=hash(c);
 		fc=(H->HC)[j];
 		for( ;*fc!='\0';fc++){
 			queue[i]=(char)(*fc-'0');
 			if(i==7){
-				fputc(trans(queue),fp);
+				fputc(trans(queue),fr);
+				size++;
 			}
 			i=(i+1)%8;
 		}
 		c=fgetc(fp);
-	}
+	}	
+	last=i;
 	if(i){
-		fputs((char)0,fp)
+		//fputc((char)0,fp);
 		for( ;i<8;i++)
 			queue[i]=(char)0;
-		fputc(trans(queue),fp);
+		fputc(trans(queue),fr);
 	}
-	//////////////////////!
+
+
+	return 1;
 }
 
 int main(){
