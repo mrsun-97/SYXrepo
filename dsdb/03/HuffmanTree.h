@@ -27,6 +27,6 @@ typedef struct {
 }Dict;
 
 typedef struct {
-	char code[11];
+	char code[12];		//mystery Orz
 	char letter;
 }HashDict,*Hashlist;

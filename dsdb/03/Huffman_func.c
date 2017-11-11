@@ -98,7 +98,7 @@ int stat(FILE *fp,Dict *fd){
 }
 
 int hash(char c){
-	return (int)(c)+1;
+	return (int)c&255;
 }
 
 void move(Dict *D,Hashlist H,HuffmanTree HT){
@@ -114,7 +114,11 @@ void move(Dict *D,Hashlist H,HuffmanTree HT){
 	}
 	for(i=1;i<=D->kind;i++){
 		j=hash((D->ch)[i]);
+/*
+printf("\t%d\t%d\n",i,j);
+*/
 		//strcpy(H[j].code,(D->HC)[i]);
+
 		for(p=H[j].code,q=(D->HC)[i];*q!='\0';p++,q++)
 			*p=*q;
 		*p='\0';
@@ -149,10 +153,8 @@ printf("a\n");
 			if(i==7){
 				fputc(trans(queue),fr);
 				size++;
-				//
 				for(k=0;k<8;k++) printf("%c ",queue[k]);
 				printf("\n");
-				//
 			}
 			i=(i+1)%8;
 		}
@@ -227,16 +229,16 @@ printf("------\n%p\n",fp);
 	stat(fp,&D);
 printf("1 %-d	%p\n",D.kind,D.HC+1);
 	HuffmanCoding(&HT,&D.HC,D.weight,D.kind);
-
 int i;
 printf("2\n");
 //for(i=1;i<257;i++) printf("\t %d\t%s\n",(D.ch)[i],(D.HC)[i]);
 printf("3\n");
 	move(&D,H,HT);
-printf("4\n");
+//for(i=0;i<D.kind;i++)
+//	printf("\t%d\t%s\n",H[i].letter,H[i].code);
 printf("HT: %p\nH : %p\nfp: %p\n",HT,H,fp);
 	fseek(fp,0,SEEK_SET);					//let fp move to the head of file
-printf("5\n");
+printf("4\n");
 	output(HT,H,D.kind,fp,"testfile.hf");
 	fclose(fp);
 	//decompress("testfile.hf");
