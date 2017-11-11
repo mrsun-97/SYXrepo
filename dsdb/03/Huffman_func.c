@@ -79,7 +79,7 @@ int stat(FILE *fp,Dict *fd){
 	fread(&c,sizeof(char),1,fp);
 	while(!feof(fp)){
 		find=0;
-		for(i=1;i<=fd->size;i++){
+		for(i=1;i<=fd->kind;i++){
 			if(c==(fd->ch)[i]){		//c is in the ch[]
 				(fd->weight)[i]++;
 				find=1;
@@ -87,10 +87,10 @@ int stat(FILE *fp,Dict *fd){
 			}
 		}
 		if(!find){					//c isn't in D.ch
-			i=fd->size+1;
+			i=fd->kind+1;
 			(fd->weight)[i]=1;
 			(fd->ch)[i]=c;
-			fd->size++;
+			fd->kind++;
 		}
 		fread(&c,sizeof(char),1,fp);
 	}
@@ -98,18 +98,26 @@ int stat(FILE *fp,Dict *fd){
 }
 
 int hash(char c){
-	return (int)(c);
+	return (int)(c)+1;
 }
 
-void move(Dict *D,Hashlist H){
+void move(Dict *D,Hashlist H,HuffmanTree HT){
 	int i,j;
+	char *p,*q;
 	for(i=0;i<257;i++){
 		H[i].code[0]='\0';
 		H[i].letter=-1;
 	}
-	for(i=1;i<=D->size;i++){
+	j=D->kind;
+	for(i=1;i<=j;i++){
+		HT[i].c=(D->ch)[i];
+	}
+	for(i=1;i<=D->kind;i++){
 		j=hash((D->ch)[i]);
-		strcpy(H[j].code,(D->HC)[i]);
+		//strcpy(H[j].code,(D->HC)[i]);
+		for(p=H[j].code,q=(D->HC)[i];*q!='\0';p++,q++)
+			*p=*q;
+		*p='\0';
 		H[j].letter=(D->ch)[i];
 	}
 }
@@ -120,18 +128,16 @@ char trans(char *q){
 	return a;
 }
 
-int output(Hashlist H,FILE *fp,char *name){
+int output(HuffmanTree HT,Hashlist H,int numd,FILE *fp,char *name){
 	char queue[8],c,*fc;
-	int i,j,last,size;
+	int i,j,last,size,k;
 	FILE *fr;
 	if((fr=fopen(name,"wb"))==NULL){
 		printf("Failed to make file '%s'\n",name);
 		exit(0);
 	}
 printf("a\n");
-	for(i=0;i<257;i++){
-		fwrite(H+i,sizeof(HashDict),1,fr);
-	}
+	fwrite(HT,sizeof(HTNode),2*numd,fr);
 	c=fgetc(fp);
 	i=0;
 	size=0;
@@ -139,10 +145,14 @@ printf("a\n");
 		j=hash(c);
 		fc=H[j].code;
 		for( ;*fc!='\0';fc++){
-			queue[i]=(char)(*fc-'0');
+			queue[i]=*fc;
 			if(i==7){
 				fputc(trans(queue),fr);
 				size++;
+				//
+				for(k=0;k<8;k++) printf("%c ",queue[k]);
+				printf("\n");
+				//
 			}
 			i=(i+1)%8;
 		}
@@ -158,8 +168,36 @@ printf("last: %d\n",last);
 	}
 	fwrite(&last,sizeof(int),1,fr);
 	fwrite(&size,sizeof(int),1,fr);
+	fwrite(&numd,sizeof(int),1,fr);
 	fclose(fr);
+	//fseek(fp,-1L,SEEK_CUR);
+	printf("Compression finished.\n");
 	return 1;
+}
+
+int decompress(char *p){
+	FILE *fp;
+	if((fp=fopen(p,"rb"))==NULL){
+		printf("Failed to open compressed file '%s'.\n",p);
+		exit(0);
+	}
+	int last,size,numd;
+	HuffmanTree HT,pht;
+	char queue[8],*fc;
+	fseek(fp,-12L,SEEK_END);
+	fread(&last,sizeof(int),1,fp);
+	fread(&size,sizeof(int),1,fp);
+	fread(&numd,sizeof(int),1,fp);
+	HT=(HuffmanTree)malloc(2*numd*sizeof(HTNode));
+	if(!HT){
+		printf("Failed to generate HuffmanTree!\n");
+		exit(0);
+	}
+	fseek(fp,0,SEEK_SET);
+	fread(HT,sizeof(HTNode),2*numd,fp);
+
+
+
 }
 
 int main(){
@@ -168,7 +206,7 @@ int main(){
 		printf("Can't open this file!\n");
 		exit(0);
 	}
-	else printf("%p\n",fp);
+printf("------\n%p\n",fp);
 	HuffmanTree HT;
 	HuffmanCode HC;
 	Dict D;
@@ -185,18 +223,22 @@ int main(){
 		exit(0);
 	}
 	D.HC=NULL;
-	D.size=0;
+	D.kind=0;
 	stat(fp,&D);
-printf("1 %d	%p\n",D.size,D.HC+1);
-	HuffmanCoding(&HT,&D.HC,D.weight,D.size);
+printf("1 %-d	%p\n",D.kind,D.HC+1);
+	HuffmanCoding(&HT,&D.HC,D.weight,D.kind);
+
+int i;
 printf("2\n");
-	move(&D,H);
+//for(i=1;i<257;i++) printf("\t %d\t%s\n",(D.ch)[i],(D.HC)[i]);
 printf("3\n");
-	fseek(fp,0,SEEK_SET);					//let fp move to the head of file
+	move(&D,H,HT);
 printf("4\n");
-	output(H,fp,"testfile.hf");
+printf("HT: %p\nH : %p\nfp: %p\n",HT,H,fp);
+	fseek(fp,0,SEEK_SET);					//let fp move to the head of file
 printf("5\n");
+	output(HT,H,D.kind,fp,"testfile.hf");
 	fclose(fp);
-	//Decompress("testfile.hf");
+	//decompress("testfile.hf");
 	return 0;
 }

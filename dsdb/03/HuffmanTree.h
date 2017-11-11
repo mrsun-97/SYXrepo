@@ -8,6 +8,7 @@ typedef String *HuffmanCode;
 typedef struct {
 	int weight;
 	int parent,lchild,rchild;
+	char c;
 }HTNode,*HuffmanTree;
 
 /*
@@ -22,10 +23,10 @@ typedef struct {
 	HuffmanCode HC;
 	int *weight;
 	char *ch;
-	int size;
+	int kind;
 }Dict;
 
 typedef struct {
-	char code[8];
+	char code[11];
 	char letter;
 }HashDict,*Hashlist;
