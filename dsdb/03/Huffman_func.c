@@ -44,7 +44,7 @@ void HuffmanCoding(HuffmanTree *HT,HuffmanCode *HC,int *w,int n){
 	for( ;i<=m;i++,p++){
 		p->weight=p->lchild=p->rchild=p->parent=0;
 	}
-	for(i=n+1;i<=m;i++){
+	for(i=n+1;i<=m;i++){					//root is in i=m.
 		Select(*HT,i-1,&s1,&s2);
 		p=*HT;
 		p[s1].parent=i;	p[s2].parent=i;
@@ -140,7 +140,6 @@ int output(HuffmanTree HT,Hashlist H,int numd,FILE *fp,char *name){
 		printf("Failed to make file '%s'\n",name);
 		exit(0);
 	}
-printf("a\n");
 	fwrite(HT,sizeof(HTNode),2*numd,fr);
 	c=fgetc(fp);
 	i=0;
@@ -153,15 +152,16 @@ printf("a\n");
 			if(i==7){
 				fputc(trans(queue),fr);
 				size++;
+				/*
 				for(k=0;k<8;k++) printf("%c ",queue[k]);
 				printf("\n");
+				*/
 			}
 			i=(i+1)%8;
 		}
 		c=fgetc(fp);
 	}	
 	last=i;
-printf("last: %d\n",last);
 	if(i){
 		//fputc((char)0,fp);
 		for( ;i<8;i++)
@@ -171,6 +171,7 @@ printf("last: %d\n",last);
 	fwrite(&last,sizeof(int),1,fr);
 	fwrite(&size,sizeof(int),1,fr);
 	fwrite(&numd,sizeof(int),1,fr);
+	printf("last: %d\nsize: %d\nnumd: %d\n",last,size,numd);
 	fclose(fr);
 	//fseek(fp,-1L,SEEK_CUR);
 	printf("Compression finished.\n");
@@ -178,28 +179,126 @@ printf("last: %d\n",last);
 }
 
 int decompress(char *p){
-	FILE *fp;
+	FILE *fp,*fq;
 	if((fp=fopen(p,"rb"))==NULL){
 		printf("Failed to open compressed file '%s'.\n",p);
 		exit(0);
 	}
-	int last,size,numd;
-	HuffmanTree HT,pht;
-	char queue[8],*fc;
+	if((fq=fopen("test_out","ab"))==NULL){
+		printf("Failed to build output file!\n");
+		exit(0);
+	}
+	int last,size,numd,s,i,pht,LAST;
+	HuffmanTree HT;
+	char queue[8],*fc,c;
 	fseek(fp,-12L,SEEK_END);
 	fread(&last,sizeof(int),1,fp);
 	fread(&size,sizeof(int),1,fp);
 	fread(&numd,sizeof(int),1,fp);
+	printf("read:\nlast: %d\nsize: %d\nnumd: %d\n",last,size,numd);
+	getchar();
 	HT=(HuffmanTree)malloc(2*numd*sizeof(HTNode));
 	if(!HT){
 		printf("Failed to generate HuffmanTree!\n");
 		exit(0);
 	}
 	fseek(fp,0,SEEK_SET);
-	fread(HT,sizeof(HTNode),2*numd,fp);
-
-
-
+	fread(HT,sizeof(HTNode),2*numd,fp);			//read HuffmanTree(SQList)
+	s=i=0;
+	LAST=2*numd-1;
+	pht=LAST;
+/*
+printf("%d\n",HT[8].c);
+fclose(fp);
+fclose(fq);
+return 1;
+*/
+	while(s<size || i){
+		if(i==0){
+			fread(&c,sizeof(char),1,fp);
+			s++;
+			//printf("%d\n",s);
+			for(i=7;i>=0;i--){
+				queue[i]=(c&1)+'0';
+				c>>=1;
+				//
+			}
+			i=0;
+		}
+loop1:
+//loop2:
+		if(queue[i]=='0'){
+			if(HT[pht].lchild){
+				pht=HT[pht].lchild;
+				printf("%d--",pht);
+			}
+			else{
+				fwrite(&HT[pht].c,sizeof(char),1,fq);			//write into file test_out
+				pht=LAST;
+				printf("^\n");
+				goto loop1;
+			}
+		}
+		else if(queue[i]=='1'){
+			if(HT[pht].rchild){
+				pht=HT[pht].rchild;
+				printf("%d--",pht);
+			}
+			else{
+				fputc(HT[pht].c,fq);
+				pht=LAST;
+				printf("^\n");
+				goto loop1;
+			}
+		}
+		//else if(queue[i]=0) break;
+		else{
+			printf("Error: meet '%d'.\n",c-'0');
+			exit(0);
+		}
+		i=(i+1)%8;
+	}
+	if(last!=0){
+		c=fgetc(fp);
+		printf("last: %d\n",last);
+		for(i=7;i>=0;i--){
+			queue[i]=(c&1)+'0';
+			c>>=1;
+		}
+		i=0;
+		while(i<last){
+			printf("queue[i]=%c\n",queue[i]);
+			if(queue[i]=='0'){
+				if(HT[pht].lchild){
+					pht=HT[pht].lchild;
+					printf("%d--",pht);
+				}
+				else{
+					fputc(HT[pht].c,fq);
+					pht=LAST;
+					printf("^\n");
+					continue;
+				}
+			}
+			else if(queue[i]='1'){
+				if(HT[pht].rchild){
+					pht=HT[pht].rchild;
+					printf("%d--",pht);
+				}
+				else{
+					fputc(HT[pht].c,fq);
+					pht=LAST;
+					printf("^\n");
+					continue;
+				}
+			}
+			i++;
+		}		
+	}
+	fclose(fp);
+	fclose(fq);
+	printf("Decompression finished.\n");
+	return 1;
 }
 
 int main(){
@@ -241,6 +340,6 @@ printf("HT: %p\nH : %p\nfp: %p\n",HT,H,fp);
 printf("4\n");
 	output(HT,H,D.kind,fp,"testfile.hf");
 	fclose(fp);
-	//decompress("testfile.hf");
+	decompress("testfile.hf");
 	return 0;
 }
