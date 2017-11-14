@@ -1,12 +1,15 @@
 #include"HuffmanTree.h"
 #include<string.h>
 
+int poww(int x,int e){
+	int sum=1,i;
+	for(i=0;i<e;i++)
+		sum*=x;
+	return sum;
+}
+
 void Select(HuffmanTree T,int j,int *s1,int *s2){
 	int i,a,b;
-	//a=(T[1].weight>T[2].weight)?T[1].weight:T[2].weight;
-	//b=(T[1].weight>T[2].weight)?T[2].weight:T[1].weight;
-	//*s1=(T[1].weight>T[2].weight)?1:2;
-	//*s2=(T[1].weight>T[2].weight)?2:1;
 	a=b=2e9;
 	*s1=*s2=0;
 	for(i=1;i<=j;i++){			//a>=b
@@ -117,8 +120,6 @@ void move(Dict *D,Hashlist H,HuffmanTree HT){
 /*
 printf("\t%d\t%d\n",i,j);
 */
-		//strcpy(H[j].code,(D->HC)[i]);
-
 		for(p=H[j].code,q=(D->HC)[i];*q!='\0';p++,q++)
 			*p=*q;
 		*p='\0';
@@ -127,8 +128,11 @@ printf("\t%d\t%d\n",i,j);
 }
 
 char trans(char *q){
-	char a;
-	a=(char)(128*q[0]+64*q[1]+32*q[2]+16*q[3]+8*q[4]+4*q[5]+2*q[6]+q[7]);
+	char a=0;
+	int i;
+	for(i=0;i<8;i++){
+		a+=((int)(q[7-i]-'0')*poww(2,i))&255;
+	}
 	return a;
 }
 
@@ -147,15 +151,17 @@ int output(HuffmanTree HT,Hashlist H,int numd,FILE *fp,char *name){
 	while(!feof(fp)){
 		j=hash(c);
 		fc=H[j].code;
+		printf("%d %s\n",c,fc);
+		getchar();
 		for( ;*fc!='\0';fc++){
 			queue[i]=*fc;
+getchar();
 			if(i==7){
 				fputc(trans(queue),fr);
 				size++;
-				/*
+				
 				for(k=0;k<8;k++) printf("%c ",queue[k]);
 				printf("\n");
-				*/
 			}
 			i=(i+1)%8;
 		}
@@ -163,7 +169,6 @@ int output(HuffmanTree HT,Hashlist H,int numd,FILE *fp,char *name){
 	}	
 	last=i;
 	if(i){
-		//fputc((char)0,fp);
 		for( ;i<8;i++)
 			queue[i]=(char)0;
 		fputc(trans(queue),fr);
@@ -173,7 +178,6 @@ int output(HuffmanTree HT,Hashlist H,int numd,FILE *fp,char *name){
 	fwrite(&numd,sizeof(int),1,fr);
 	printf("last: %d\nsize: %d\nnumd: %d\n",last,size,numd);
 	fclose(fr);
-	//fseek(fp,-1L,SEEK_CUR);
 	printf("Compression finished.\n");
 	return 1;
 }
@@ -208,7 +212,8 @@ int decompress(char *p){
 	LAST=2*numd-1;
 	pht=LAST;
 /*
-printf("%d\n",HT[8].c);
+for(i=0;i<257;i++)
+	printf("\t%d\t%d\t%d\n",i,HT[i].c,HT[i].parent);
 fclose(fp);
 fclose(fq);
 return 1;
@@ -226,32 +231,30 @@ return 1;
 			i=0;
 		}
 loop1:
-//loop2:
 		if(queue[i]=='0'){
 			if(HT[pht].lchild){
 				pht=HT[pht].lchild;
-				printf("%d--",pht);
+//printf("%d--",pht);
 			}
 			else{
 				fwrite(&HT[pht].c,sizeof(char),1,fq);			//write into file test_out
 				pht=LAST;
-				printf("^\n");
+//printf("^\n");
 				goto loop1;
 			}
 		}
 		else if(queue[i]=='1'){
 			if(HT[pht].rchild){
 				pht=HT[pht].rchild;
-				printf("%d--",pht);
+//printf("%d--",pht);
 			}
 			else{
-				fputc(HT[pht].c,fq);
+				fwrite(&HT[pht].c,sizeof(char),1,fq);
 				pht=LAST;
-				printf("^\n");
+//printf("^\n");
 				goto loop1;
 			}
 		}
-		//else if(queue[i]=0) break;
 		else{
 			printf("Error: meet '%d'.\n",c-'0');
 			exit(0);
@@ -267,28 +270,28 @@ loop1:
 		}
 		i=0;
 		while(i<last){
-			printf("queue[i]=%c\n",queue[i]);
+//printf("queue[i]=%c\n",queue[i]);
 			if(queue[i]=='0'){
 				if(HT[pht].lchild){
 					pht=HT[pht].lchild;
-					printf("%d--",pht);
+//printf("%d--",pht);
 				}
 				else{
-					fputc(HT[pht].c,fq);
+					fwrite(&HT[pht].c,sizeof(char),1,fq);
 					pht=LAST;
-					printf("^\n");
+//printf("^\n");
 					continue;
 				}
 			}
 			else if(queue[i]='1'){
 				if(HT[pht].rchild){
 					pht=HT[pht].rchild;
-					printf("%d--",pht);
+//printf("%d--",pht);
 				}
 				else{
-					fputc(HT[pht].c,fq);
+					fwrite(&HT[pht].c,sizeof(char),1,fq);
 					pht=LAST;
-					printf("^\n");
+//printf("^\n");
 					continue;
 				}
 			}
@@ -333,13 +336,14 @@ printf("2\n");
 //for(i=1;i<257;i++) printf("\t %d\t%s\n",(D.ch)[i],(D.HC)[i]);
 printf("3\n");
 	move(&D,H,HT);
-//for(i=0;i<D.kind;i++)
-//	printf("\t%d\t%s\n",H[i].letter,H[i].code);
+for(i=0;i<257;i++)
+	printf("\t%d\t%s\n",255&H[i].letter,H[i].code);
 printf("HT: %p\nH : %p\nfp: %p\n",HT,H,fp);
 	fseek(fp,0,SEEK_SET);					//let fp move to the head of file
 printf("4\n");
-	output(HT,H,D.kind,fp,"testfile.hf");
+	char *NAME="testfile.hf";
+	output(HT,H,D.kind,fp,NAME);
 	fclose(fp);
-	decompress("testfile.hf");
+	decompress(NAME);
 	return 0;
 }
