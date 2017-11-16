@@ -151,6 +151,7 @@ int output(HuffmanTree HT,Hashlist H,int numd,FILE *fp,char *name){
 	while(!feof(fp)){
 		j=hash(c);
 		fc=H[j].code;
+//[test]
 //printf("%d %s\n",c,fc);
 //getchar();
 		for( ;*fc!='\0';fc++){
@@ -215,7 +216,7 @@ int decompress(char *p){
 	s=i=0;
 	LAST=2*numd-1;
 	pht=LAST;
-/*
+/*[test]
 for(i=0;i<257;i++)
 	printf("\t%d\t%d\t%d\n",i,HT[i].c,HT[i].parent);
 fclose(fp);
@@ -226,35 +227,32 @@ return 1;
 		if(i==0){
 			fread(&c,sizeof(char),1,fp);
 			s++;
-//printf("_%d\n",c);
 			for(i=7;i>=0;i--){
 				queue[i]=(c&1)+'0';
 				c>>=1;
 				//
 			}
-//printf("%s\n",queue);
-//getchar();
 			i=0;
 		}
 loop1:
-		if(queue[i]=='0'){
+		if(queue[i]=='0'){										//choose left
 			if(HT[pht].lchild){
 				pht=HT[pht].lchild;
 			}
 			else{
 				fwrite(&HT[pht].c,sizeof(char),1,fq);			//write into file test_out
-printf("%c",HT[pht].c);//getchar();
+//printf("%c",HT[pht].c);//getchar();
 				pht=LAST;
 				goto loop1;
 			}
 		}
-		else if(queue[i]=='1'){
+		else if(queue[i]=='1'){									//choose right
 			if(HT[pht].rchild){
 				pht=HT[pht].rchild;
 			}
 			else{
 				fwrite(&HT[pht].c,sizeof(char),1,fq);
-printf("%c",HT[pht].c);//getchar();
+//printf("%c",HT[pht].c);//getchar();
 				pht=LAST;
 				goto loop1;
 			}
@@ -267,35 +265,29 @@ printf("%c",HT[pht].c);//getchar();
 	}
 	if(last!=0){
 		c=fgetc(fp);
-		printf("last: %d\n",last);
 		for(i=7;i>=0;i--){
 			queue[i]=(c&1)+'0';
 			c>>=1;
 		}
 		i=0;
 		while(i<last){
-//printf("queue[i]=%c\n",queue[i]);
 			if(queue[i]=='0'){
 				if(HT[pht].lchild){
 					pht=HT[pht].lchild;
-//printf("%d--",pht);
 				}
 				else{
 					fwrite(&HT[pht].c,sizeof(char),1,fq);
 					pht=LAST;
-//printf("^\n");
 					continue;
 				}
 			}
 			else if(queue[i]='1'){
 				if(HT[pht].rchild){
 					pht=HT[pht].rchild;
-//printf("%d--",pht);
 				}
 				else{
 					fwrite(&HT[pht].c,sizeof(char),1,fq);
 					pht=LAST;
-//printf("^\n");
 					continue;
 				}
 			}
@@ -348,6 +340,7 @@ printf("4\n");
 	char *NAME="testfile.hf";
 	output(HT,H,D.kind,fp,NAME);
 	fclose(fp);
+	getchar();
 	decompress(NAME);
 	return 0;
 }
