@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 typedef struct LNode{
 	int data;
@@ -16,7 +17,7 @@ int hash_mod13(int x){
 int insert_HT1(int a){
 	int i,h=0;
 	for(i=0;i<13;i++){
-		if(HT1[i]==NULL || HT1[i]==a){
+		if(HT1[i]==0 || HT1[i]==a){
 			h=1;			//list isn't full
 			break;
 		}
@@ -26,7 +27,7 @@ int insert_HT1(int a){
 		return -1;
 	}
 	int sum=0;
-	while(i=-1,i++){		//only once
+	for(i=-1;i<=0;i++){		//only once
 		h=hash_mod13(a);
 		while(sum++,HT1[h]!=0 && HT1[h]!=a)
 			h=hash_mod13(h+1);
@@ -58,16 +59,16 @@ int search_HT1(int a){		//if can't find a, then sum>0, else sum<0
 	int i,h;
 	int sum=0;
 	h=i=hash_mod13(a);
-	while(sum++,HT1[i]!=0 && HT[i]!=a){
+	while(sum++,HT1[i]!=0 && HT1[i]!=a){
 		i=hash_mod13(i+1);
 		if(i==h) break;		
 	}
-	if(HT[i]==a){
+	if(HT1[i]==a){
 		printf("  HT1[%d]=%d\n",i,a);
 		return -sum;		//let sum<0
 	}
 	else{
-		printf("  %d isn't in HT1.\n");
+		printf("  %d isn't in HT1.\n",a);
 		return sum;
 	}
 }
@@ -130,18 +131,18 @@ int search_HT2(int a){
 			return -sum;
 		}
 		else{
-			printf("  %d isn't in HT2.\n");
+			printf("  %d isn't in HT2.\n",a);
 			return sum;
 		}
 	}
 	else{
-		printf("  %d isn't in HT2.\n")
+		printf("  %d isn't in HT2.\n",a);
 		return sum;
 	}
 }
 
 float FASL_HT1(void){
-	int a=1000;
+	int a=1000,i;
 	int sl=0;
 	float asl;
 	for(i=0;i<13;i++){
@@ -152,7 +153,7 @@ float FASL_HT1(void){
 }
 
 float FASL_HT2(void){
-	int a=1000;
+	int a=1000,i;
 	int sl=0;
 	float asl;
 	for(i=0;i<13;i++){
@@ -183,60 +184,71 @@ void print_HT2(void){
 	Linklist p;
 	for(i=0;i<13;i++){
 		printf(" %d -->",i);
+		p=HT2[i];
 		if(p){
 			do{
 				printf(" %d -->",p->data);
-			}while(p->next!=NULL);
+			}while((p=p->next)!=NULL);
 		}
 		printf(" (null)\n");
+	}
 }
 
 void delete_HT1(int a){
 	if(a<=0){
 		printf("Invalid number!\n");
-		return 0;
+		return;
 	}
 	int i,j,h;
 	int sum=0;
 	h=i=hash_mod13(a);
-	while(sum++,HT1[i]!=0 && HT[i]!=a){
+	while(sum++,HT1[i]!=0 && HT1[i]!=a){
 		i=hash_mod13(i+1);
 		if(i==h) break;		
 	}
-	if(HT[i]==a){
+	if(HT1[i]==a){
 		printf("  HT1[%d]=%d\n",i,a);
-		HT[i]=0;	
+		HT1[i]=0;	
 		while(j=i,i=hash_mod13(i+1),HT1[i]!=0){
 			if(hash_mod13(HT1[i])!=i){
 				HT1[j]=HT1[i];
 				HT1[i]=0;
 			}
+			else break;
 		}
 	}
 	else{
 		printf("  %d isn't in HT1.\n");
-		return sum;
 	}
 }
 
 void main(){
 	int a=1,k;
 	make_HT1();
-	print_HT1();	
+	print_HT1();
+printf("1\n");
 	while(a!=0){
+		printf("Search: ");
 		scanf("%d",&a);getchar();
 		k=search_HT1(a);
 		if(k!=0)
 			printf("times: %d\n",k>0?k:-k);
 	}
+	print_HT1();
+	printf("Which do you want to delete?\n-->");
+	scanf("%d",&a);getchar();
+	delete_HT1(a);
+	print_HT1();
 	make_HT2();
 	print_HT2();
 	while(a!=0){
+		printf("Search: ");
 		scanf("%d",&a);getchar();
 		k=search_HT2(a);
 		if(k!=0)
 			printf("times: %d\n",k>0?k:-k);
 	}
-	printf("ASL when failed to find x: %f\n",FASL_HT1());
-	printf("ASL when failed to find x: %f\n",FASL_HT2());
+	printf("ASL when failed to find x: %.2f\n",FASL_HT1());
+	printf("ASL when failed to find x: %.2f\n",FASL_HT2());
+	return;
 }
