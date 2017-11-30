@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+//#define run
 
 typedef struct LNode{
 	int data;
@@ -15,6 +16,7 @@ int hash_mod13(int x){
 }
 
 int insert_HT1(int a){
+	if(a<=0) return 0;
 	int i,h=0;
 	for(i=0;i<13;i++){
 		if(HT1[i]==0 || HT1[i]==a){
@@ -27,12 +29,15 @@ int insert_HT1(int a){
 		return -1;
 	}
 	int sum=0;
-	for(i=-1;i<=0;i++){		//only once
+	if(1){					//only once
 		h=hash_mod13(a);
-		while(sum++,HT1[h]!=0 && HT1[h]!=a)
+		while(sum++,HT1[h]!=0 && HT1[h]!=a){
 			h=hash_mod13(h+1);
-		if(HT1[h]==a)
+		}
+		if(HT1[h]==a){
+			printf("%d already exists.\n",a);
 			sum=0;
+		}
 		else 
 			HT1[h]=a;
 	}
@@ -209,21 +214,25 @@ void delete_HT1(int a){
 	if(HT1[i]==a){
 		printf("  HT1[%d]=%d\n",i,a);
 		HT1[i]=0;	
-		while(j=i,i=hash_mod13(i+1),HT1[i]!=0){
-			if(hash_mod13(HT1[i])!=i){
-				HT1[j]=HT1[i];
-				HT1[i]=0;
-			}
-			else break;
+		for(i=i+1,j=0;j<13;j++){
+			h=HT1[j];
+			HT1[j]=0;
+			insert_HT1(h);
 		}
 	}
 	else{
-		printf("  %d isn't in HT1.\n");
+		printf("  %d isn't in HT1.\n",a);
 	}
 }
 
 void main(){
 	int a=1,k;
+	printf("--> ");
+#ifdef run
+	for(k=0;k<12;k++){
+		scanf("%d",&D[k]);getchar();
+	}
+#endif
 	make_HT1();
 	print_HT1();
 printf("1\n");
@@ -235,12 +244,10 @@ printf("1\n");
 			printf("times: %d\n",k>0?k:-k);
 	}
 	print_HT1();
-	printf("Which do you want to delete?\n-->");
-	scanf("%d",&a);getchar();
-	delete_HT1(a);
-	print_HT1();
+
 	make_HT2();
 	print_HT2();
+	a=1;
 	while(a!=0){
 		printf("Search: ");
 		scanf("%d",&a);getchar();
@@ -250,5 +257,9 @@ printf("1\n");
 	}
 	printf("ASL when failed to find x: %.2f\n",FASL_HT1());
 	printf("ASL when failed to find x: %.2f\n",FASL_HT2());
+	printf("Which do you want to delete?\n-->");
+	scanf("%d",&a);getchar();
+	delete_HT1(a);
+	print_HT1();
 	return;
 }
