@@ -104,7 +104,8 @@ int hash(char c){
 	return (int)c&255;
 }
 
-void move(Dict *D,Hashlist H,HuffmanTree HT){
+//generate a hashlist to accelerate the compression when searching for haffmancode.
+void move(Dict *D,Hashlist H,HuffmanTree HT){.
 	int i,j;
 	char *p,*q;
 	for(i=0;i<257;i++){
@@ -240,7 +241,7 @@ loop1:
 				pht=HT[pht].lchild;
 			}
 			else{
-				fwrite(&HT[pht].c,sizeof(char),1,fq);			//write into file test_out
+				fwrite(&HT[pht].c,sizeof(char),1,fq);			//write into file "test_out"
 //printf("%c",HT[pht].c);//getchar();
 				pht=LAST;
 				goto loop1;
@@ -251,7 +252,7 @@ loop1:
 				pht=HT[pht].rchild;
 			}
 			else{
-				fwrite(&HT[pht].c,sizeof(char),1,fq);
+				fwrite(&HT[pht].c,sizeof(char),1,fq);			//write into file "test_out"
 //printf("%c",HT[pht].c);//getchar();
 				pht=LAST;
 				goto loop1;
@@ -263,7 +264,7 @@ loop1:
 		}
 		i=(i+1)%8;
 	}
-	if(last!=0){
+	if(last!=0){				//there are also some bits remains, and their number is less than eight to be decode.
 		c=fgetc(fp);
 		for(i=7;i>=0;i--){
 			queue[i]=(c&1)+'0';
@@ -275,7 +276,7 @@ loop1:
 				if(HT[pht].lchild){
 					pht=HT[pht].lchild;
 				}
-				else{
+				else{	//lchild doesn't exist.
 					fwrite(&HT[pht].c,sizeof(char),1,fq);
 					pht=LAST;
 					continue;
@@ -285,7 +286,7 @@ loop1:
 				if(HT[pht].rchild){
 					pht=HT[pht].rchild;
 				}
-				else{
+				else{	//rchild doesn't exist.
 					fwrite(&HT[pht].c,sizeof(char),1,fq);
 					pht=LAST;
 					continue;
@@ -306,7 +307,7 @@ int main(){
 		printf("Can't open this file!\n");
 		exit(0);
 	}
-printf("------\n%p\n",fp);
+//printf("------\n%p\n",fp);
 	HuffmanTree HT;
 	HuffmanCode HC;
 	Dict D;
@@ -325,22 +326,22 @@ printf("------\n%p\n",fp);
 	D.HC=NULL;
 	D.kind=0;
 	stat(fp,&D);
-printf("1 %-d	%p\n",D.kind,D.HC+1);
+//printf("1 %-d	%p\n",D.kind,D.HC+1);
 	HuffmanCoding(&HT,&D.HC,D.weight,D.kind);
 int i;
-printf("2\n");
+//printf("2\n");
 //for(i=1;i<257;i++) printf("\t %d\t%s\n",(D.ch)[i],(D.HC)[i]);
-printf("3\n");
+//printf("3\n");
 	move(&D,H,HT);
 //for(i=0;i<257;i++)
 //	printf("\t%d\t%s\n",255&H[i].letter,H[i].code);
-printf("HT: %p\nH : %p\nfp: %p\n",HT,H,fp);
+printf("HT: %p\nH : %p\nfp: %p\n\n",HT,H,fp);
 	fseek(fp,0,SEEK_SET);					//let fp move to the head of file
-printf("4\n");
+//printf("4\n");
 	char *NAME="testfile.hf";
 	output(HT,H,D.kind,fp,NAME);
 	fclose(fp);
-	getchar();
+	getchar();								//it will be paused here before decompressing.
 	decompress(NAME);
 	return 0;
 }

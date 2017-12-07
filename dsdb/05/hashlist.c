@@ -83,7 +83,7 @@ int insert_HT2(int a){
 	int sum=1;
 	h=hash_mod13(a);
 	Linklist p=HT2[h],q;
-	if(p){
+	if(p){		//pointer p exists, so we need to get the end of the linklist.
 		while(sum++,p->data!=a && p->next!=NULL) p=p->next;
 		if(p->data==a) return 0;	
 		q=(Linklist)malloc(sizeof(LNode));
@@ -95,7 +95,7 @@ int insert_HT2(int a){
 		q->next=NULL;
 		p->next=q;		
 	}
-	else{
+	else{		// p doesn't exist, make a LNode and insert directly.
 		p=HT2[h]=(Linklist)malloc(sizeof(LNode));
 		if(!p){
 			printf("overflowed!\n");
@@ -146,7 +146,7 @@ int search_HT2(int a){
 	}
 }
 
-float FASL_HT1(void){
+float FASL_HT1(void){		//ASL when failed to find certain term.
 	int a=1000,i;
 	int sl=0;
 	float asl;
@@ -157,7 +157,7 @@ float FASL_HT1(void){
 	return asl;
 }
 
-float FASL_HT2(void){
+float FASL_HT2(void){		//the same as FASL_HT1().
 	int a=1000,i;
 	int sl=0;
 	float asl;

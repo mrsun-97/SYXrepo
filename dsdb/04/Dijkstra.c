@@ -102,8 +102,8 @@ void main(){
 		c=fgetc(fp);
 	}
 	fclose(fp);
-	n=-1;		//let n!=i
-	while(1){
+	n=-1;			//let n!=i
+	while(1){		//loop until i or j is out of range.
 		printf("Please input v0 and vt:");
 		scanf("%d %d",&i,&j);getchar();
 		if(i>=0 && i<MAX && j>=0 && j<MAX){

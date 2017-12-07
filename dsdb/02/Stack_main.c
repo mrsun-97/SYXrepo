@@ -9,11 +9,11 @@ int Pop(SQStack *S,Stype *e);
 int StackEmpty(SQStack S);
 
 
-static double arr[50]={0};
+static double arr[50]={0};	//it's a stack too
 static int end=1; 
 static char c,x;
 
-int isOP(char s){
+int isOP(char s){			//is operator
 	switch(s){
 		case '+':
 		case '-':
@@ -27,7 +27,7 @@ int isOP(char s){
 	}
 }
 
-char Precede(char a,char b){
+char Precede(char a,char b){	//define the priority
 	switch(a){
 		case '+':
 		case '-': 
@@ -146,12 +146,13 @@ loop:	printf("%c_1\n",c);
 				arr[end++]=((double)Int+Dec)*(isnegtv?(-1):1);
 				isnegtv=0;
 			}
+			/*
 			printf("--begin--\n");
 			for(i=0;i<end;i++){
 				printf("%g\n",arr[i]);
 			}
 			printf("--end--\n");
-
+			*/
 		}//end if
 		else if(c==' ' || c=='\n')
 			c=getchar();
@@ -174,7 +175,7 @@ loop:	printf("%c_1\n",c);
 				}
 			}
 			if(c>='a' && c<='z'){
-				if(c=='s' || c=='c' || c=='t'){		//sin cos tan
+				if(c=='s' || c=='c' || c=='t'){		//sin, cos and tan
 					Push(&OP,c);
 					do{
 						c=getchar();
@@ -218,8 +219,6 @@ loop:	printf("%c_1\n",c);
 			}
 		}
 	}//end while
-	printf("Result: %.3g\n",
-			/*(double)(int)(arr[--end]+0.5)*/
-		   arr[--end]);
+	printf("Result: %.5g\n",arr[--end]);
 	return 0;
 }

@@ -1,9 +1,9 @@
 #include<time.h>
 #include"common.h"
 #define ARRLEN 40
-#define MIN 1e-6
+#define MIN 1e-6		//if |a-b|<MIN, then we assume that a==b
 
-double poww(double x,int n){
+double poww(double x,int n){	//take place of pow();
     int i;
     if(n>1){
         for(i=0;i<n-1;i++)
@@ -26,6 +26,7 @@ void ListArr(Linklist *A){
 }
 
 
+//The most important function which makes data in order.
 int order(Linklist Q){
     if(!Q || !Q->next){
         printf("order:empty list\n");
@@ -105,7 +106,9 @@ int order(Linklist Q){
     return 1;
 }
 
-int RandCreatPolyn(Linklist *p,int m){     //(&a[n],m)
+//Randomly create a polynomial.
+//Using this function you don't need to write the items one by one.
+int RandCreatPolyn(Linklist *p,int m){		//(&a[n],m)
     if(*p){
         printf("List is not empty!\n");
         exit(0);
@@ -125,7 +128,7 @@ int RandCreatPolyn(Linklist *p,int m){     //(&a[n],m)
         if(!s) exit(-1);
         q->next=s;
         s->coef=(double)rand()/200000000;
-        s->expn=(int)abs(rand()%21);
+        s->expn=(int)abs(rand()%21);		//keep expn between 0 and 20
         s->next=NULL;
         q=s;
     }
@@ -133,9 +136,6 @@ int RandCreatPolyn(Linklist *p,int m){     //(&a[n],m)
     printf("RandCreate:finished.\n\n");
     return 1;
 }
-
-
-
 
 
 int CreatPolyn(Linklist *p,int m){     //(&a[n],m)
@@ -183,7 +183,7 @@ int CreatPolyn(Linklist *p,int m){     //(&a[n],m)
         s->next=NULL;
         q=s;
     }
-printf("Into order\n");
+//printf("be in order\n");
     order(*p);
     printf("Create:finished.\n");
     return 1;
@@ -292,7 +292,7 @@ int SubtractPolyn(Linklist *A,Linklist *B){
     return 1;
 }
 
-
+//input x and output p(x)
 double Value(Linklist Q,double x){
     if(!Q || !Q->next){
         printf("Empty list!\n");
@@ -430,7 +430,7 @@ int DiffPolyn(Linklist Q,int n){
 		while(p=p->next){
 			p->coef*=p->expn;
 			p->expn--;
-printf("test_diff\n");
+//printf("test_diff\n");
 		}
 		n--;
 	
@@ -442,7 +442,7 @@ printf("test_diff\n");
 	return 1;
 }
 
-
+//undefined integral
 int UDFIntegral(Linklist Q){
 	if(!Q || !Q->next){
 		printf("Empty list!\n");
@@ -456,7 +456,7 @@ int UDFIntegral(Linklist Q){
 	return 1;
 }
 
-
+//defined integral
 int DEFIntegral(Linklist Q){
 	if(!Q || !Q->next){
 		printf("Empty list\n");
@@ -475,7 +475,7 @@ int DEFIntegral(Linklist Q){
 }
 
 
-int MultPolyn(Linklist *P,Linklist *Q){
+int MultPolyn(Linklist *P,Linklist *Q){		//P*Q = Sigma(Pi*Q)
 	if(!*P || !*Q){
 		printf("List is empty!\n");
 		exit(0);
@@ -609,7 +609,7 @@ int Least_Greatest(Linklist *P,Linklist *Q){
 	Linklist p,q,C=NULL,D=NULL;
 	CopyPolyn(*P,&C);
 	CopyPolyn(*Q,&D);
-	if((*Q)->next->expn > (*P)->next->expn){
+	if((*Q)->next->expn > (*P)->next->expn){	//let P's max expn >= Q's.
 		p=*P;
 		*P=*Q;
 		*Q=p;
