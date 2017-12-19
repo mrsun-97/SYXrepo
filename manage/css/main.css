@@ -1,0 +1,197 @@
+
+.main-bg {
+  background: #300030;
+}
+.white-color {
+  color: #fff;
+}
+.button {
+  padding: 20px 60px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  display: inline-block;
+  color: #fff;
+  text-shadow: none;
+  outline: none;
+  border: 0;
+}
+.button:hover {
+  cursor: pointer;
+  color: #fff;
+}
+.button.light {
+  padding: 19px 59px;
+}
+
+.button.light {
+  border: 2px solid #eeeeee;
+}
+
+.mab-none {
+  margin-bottom: 0;
+}
+
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
+/* General button style (reset) */
+.portfolio-wrapper .button {
+  padding: 20px 60px;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  border: 3px solid #fff;
+  color: #fff;
+  overflow: hidden;
+}
+.portfolio-wrapper .button:after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s;
+  border: 3px solid #fff;
+  color: #fff;
+  width: 100%;
+  height: 0;
+  top: 50%;
+  left: 50%;
+  background: #fff;
+  opacity: 0;
+  -webkit-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  -moz-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  -ms-transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+}
+.portfolio-wrapper .button:hover,
+.button:active {
+  color: #e74c3c;
+}
+.portfolio-wrapper .button:hover:after {
+  height: 260%;
+  opacity: 1;
+}
+.portfolio-wrapper .button:active:after {
+  height: 400%;
+  opacity: 1;
+}
+/* ========================================================================
+  2.1 Component: Header
+ ========================================================================== */
+header {
+  position: relative;
+}
+/* ========================================================================
+  2.15 Component: Send Message
+ ========================================================================== */
+.send-message {
+  padding: 20px;
+}
+.send-message .send-icon {
+  height: 80px;
+  width: 80px;
+  margin: 0 auto;
+  background: #300030;
+  border-radius: 50%;
+  line-height: 60px;
+  margin-top: -60px;
+  font-size: 20px;
+  position: relative;
+}
+.send-message p {
+  font-size: 30px;
+}
+.send-message:hover {
+  cursor: pointer;
+}
+.send-message .modal-lg {
+  width: 700px;
+}
+.modal .modal-content {
+  box-shadow: none;
+  border-radius: 0;
+  border: 0;
+  position: relative;
+}
+.modal .close {
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: #500050;
+  opacity: 1;
+  height: 40px;
+  width: 40px;
+  color: #FFF;
+  font-size: 28px;
+  line-height: 45px;
+  outline: none;
+  z-index: 10;
+}
+.modal .close span {
+  outline: none;
+}
+.modal .modal-body {
+  padding: 40px 60px;
+}
+.modal .member-info {
+  padding: 0;
+}
+.modal input {
+  height: 50px;
+}
+.modal input,
+.modal textarea {
+  padding: 10px 20px;
+  border-radius: 0;
+  font-size: 18px;
+}
+.modal input:focus,
+.modal textarea:focus {
+  border-color: #e74c3c;
+  box-shadow: none;
+}
+.modal textarea {
+  resize: none;
+}
+.modal .button {
+  width: 100%;
+  border-radius: 0;
+  padding: 15px 60px;
+}
+.form-control::-webkit-input-placeholder {
+  color: #DBDBDB;
+  font-style: italic;
+}
+/* ========================================================================
+  2.16 Component: Footer
+ ========================================================================== */
+.back-to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 100;
+  background: #000000;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 4px;
+  color: #fff;
+  -webkit-animation: pulse 1s linear 0s infinite alternate;
+  -moz-animation: pulse 1s linear 0s infinite alternate;
+  -o-animation: pulse 1s linear 0s infinite alternate;
+  animation: pulse 1s linear 0s infinite alternate;
+}
+
+/*end*/

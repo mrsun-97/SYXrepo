@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<title>Manage Page</title>
+<meta charset="UTF-8">
+    <link rel="stylesheet" href="css/typography.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script language="javascript">
+	<!--
+	/*var password="";
+	password=prompt('请输入密码：','');
+	if (password!='phyion'){
+		alert("密码输入不正确，无法进入本站！！");
+		window.location.href="http://baidu.com";
+		//window.close();
+	}
+
+	$(document).ready(function(){
+        $('#send').click(function() {
+            var name = $('#name').val();
+            var arg= $('#arg').val();
+            var url = "http://127.0.0.1:8000/manage/?name=" + name + "&arg=" + arg ;
+			alert(url);
+		   // url=encodeURI(url);   //对URL的地址进行encodeURI编码，实际上只有中文的部分被修改编码
+            window.open(url);
+        });
+    });*/
+	-->
+</script>
+</head>
+
+<body class="body">
+<header id="header"/>
+<br><br><br><hr><hr><br>
+<div align="center">
+<form align="center">
+	<p>Function Name&nbsp：&nbsp<input type="text" id="name"></p>
+	<p>Function Arg &nbsp&nbsp：&nbsp<input type="text" id="arg"></p>
+	<input type="button" value="Submit">
+</form>
+</div>
+<br><hr><hr><br><br><hr><hr><br><br><hr><hr><br><br><hr><hr><br><br><hr><hr><br><br><hr><hr><br>
+<div>
+	<h2 align="center">Help List</h3>
+	<table frame=void align="center" width=900px>
+		<tr>
+			<ul>
+				<td width=100px/>
+				<td>				
+					<li><p><strong>ReadNews(filename):</strong></p>
+						<p>&nbsp&nbsp读取并更新新闻，filename为文件名</p>
+						<p>&nbsp&nbsp(以'n'+日期命名,如"n20170807.txt")</p>
+						<p>&nbsp&nbsp文件格式要求:<a href="newsgeshi.txt">新闻格式</p>
+					</li>
+				</td>
+				<td width=150px/>
+				<td>
+					<li><p><strong>ReadActivity(filename):</strong></p>
+						<p>&nbsp&nbsp读取并更新活动信息，filename为文件名</p>
+						<p>&nbsp&nbsp(以'a'+日期命名,如"n20170807.txt")</p>
+						<p>&nbsp&nbsp文件格式要求:<a href="activitygeshi.txt">活动格式</p>
+				</td>
+			</ul>
+			<tr>
+			<ul>
+				<td width=100px/>
+				<td>				
+					<li><p><strong>DeleteNews(filename):</strong></p>
+						<p>&nbsp&nbsp删除新闻，filename为文件名</p>
+						<p>&nbsp&nbspfilename=='all'删除所有新闻数据</p>
+					</li>
+				</td>
+				<td width=150px/>
+				<td>
+					<li><p><strong>DeleteActivity(filename):</strong></p>
+						<p>&nbsp&nbsp删除活动信息，filename为文件名</p>
+						<p>&nbsp&nbspfilename='all'删除所有活动数据</p>
+				</td>
+			</ul>
+	</table>
+</div>
+<section id="send-message" class="send-message main-bg white-color text-center">
+        <div class="send-icon" data-toggle="modal" data-target="#contact-form">
+            <i class="fa fa-paper-plane"></i>
+        </div>
+        <p class="light-text">Have any <span class="bold-text">project</span>? Send a <span class="bold-text">message</span ></p>
+
+        <!-- Contact Form Modal -->
+        <div class="modal fade contact-form" id="contact-form" tabindex="-1" role="dialog" aria-labelledby="contact-form" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <div class="modal-body">
+
+                        <!-- *****  Contact form ***** -->
+                        <form class="form" id="contact-form">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control" id="first-name" placeholder="First name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control" id="last-name" placeholder="Last name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="email" class="form-control" id="email" placeholder="Email address">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <input type="text" class="form-control" id="project-name" placeholder="Project name">
+                                </div>
+                                <div class="form-group col-md-12 mab-none">
+                                    <textarea rows="6" class="form-control" id="description" placeholder="Your project details and description ..."></textarea>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <button class="button bold-text main-bg"><i class="fa fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div> <!-- *** end modal-body *** -->
+                </div> <!-- *** end modal-content *** -->
+            </div> <!-- *** end modal-dialog *** -->
+        </div> <!-- *** end Contact Form modal *** -->
+    </section> <!-- *** end Send Message *** -->
+	<div class="back-to-top" data-rel="header">
+        <i class="icon-up"></i>
+    </div>
+    <script src="js/vendor/jquery-1.11.1.js"></script>
+    <<script src="js/vendor/jquery-migrate-1.2.1.min.js"></script>-->
+   
+    <script src="js/vendor/bootstrap.js"></script>
+   
+    <script src="js/main.js"></script>
+</body>
+</html>
