@@ -1,6 +1,6 @@
 extern crate interpolation;
 use interpolation::basic::generate;
-use interpolation::sort::lagrange_sort;
+use interpolation::sort;
 use interpolation::basic::fabs;
 use std::f64;
 
@@ -22,6 +22,7 @@ fn main() {
     */
 
     //lab02
+    /*
     println!("lab02: ");
     let arr_n = [5, 10, 20, 40];// N
     println!("(1)");
@@ -52,10 +53,51 @@ fn main() {
         }
         println!("N = {},\t{}",n ,max);
     }
+    */
+    
+    println!("lab02: ");
+    let arr_n = [5, 10, 20, 40];// N
+    println!("(1)");
+    for n in arr_n.iter() {     //n: 即为 N
+        let fxy = |i: f64| -> f64 {-5.0+10.0*i/(*n as f64)};
+        let ft = |x| {1.0/(x*x+1.0)};
+        let (ax, ay) = generate(fxy, *n, &ft);
+        let (data, x0) = sort::newton(&ax, &ay);        //给出系数
+        let (x, f_x) = generate(|x| {-5.0+10.0*x/500.0}, 500, ft);
+        let mut y: Vec<f64> = sort::calculate(&data, &x0, &x);
+        let mut max = 0.0;
+        for i in 0..y.len() {
+            y[i] = fabs(y[i]-f_x[i]);
+            if y[i] > max {
+                max = y[i];
+            }
+        }
+        println!("N = {},\t{:e}",n ,max);
+    }
+
+
+    println!("(2)");
+    for n in arr_n.iter() {     //n: 即为 N
+        let fxy = |i: f64| -> f64 {-5.0*f64::cos((2.0*i+1.0)/(2.0*(*n as f64)+2.0)*f64::consts::PI)};
+        let ft = |x| {1.0/(x*x+1.0)};
+        let (ax, ay) = generate(fxy, *n, &ft);
+        let (data, x0) = sort::newton(&ax, &ay);
+        let (x, f_x) = generate(|x| {-5.0+10.0*x/500.0}, 500, ft);
+        let mut y: Vec<f64> = sort::calculate(&data, &x0, &x);
+        let mut max = 0.0;
+        for i in 0..y.len() {
+            y[i] = fabs(y[i]-f_x[i]);
+            if y[i] > max {
+                max = y[i];
+            }
+        }
+        println!("N = {},\t{:e}",n ,max);
+    }
 }
 
 //题中所给函数
+/*
 fn fx(x: f64) -> f64 {
     1.0/(x*x+1.0)
 }
-
+*/
