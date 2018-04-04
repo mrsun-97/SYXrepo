@@ -1,0 +1,6 @@
+[package]
+name = "maxsba"
+version = "0.1.0"
+authors = ["syx <sunatdnf@qq.com>"]
+
+[dependencies]
