@@ -820,7 +820,7 @@ content: '';
 }
 /*-- travel --*/
 .travel-bg {
-  min-height: 128em;
+  min-height: 107em;
 }
 .travel-bottom-left h2{
 	color:#666666;
@@ -973,7 +973,7 @@ content: '';
   line-height: 1.5em;
   color: #555555;
   margin: 0;
-  font-size: 15px;
+  font-size: 13px;
   padding-bottom: 1em;
 }
 .single-bottom ul{
