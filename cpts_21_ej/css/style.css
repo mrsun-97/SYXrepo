@@ -35,7 +35,7 @@ body a {
 	font-style: italic;
 	color: #787878;
 	margin:0;
-	font-size:11px;
+	font-size:0.8em;
 }
 .nav-right p a{
 	font-family: 'Georgia Italic';
@@ -71,7 +71,7 @@ body a {
 /*-- bg-banner --*/
 .banner-bg{
 	background:url(../images/strip.png);
-	min-height: 426px;
+	min-height: 10%;
 }
 .banner-bottom-bg{
 	background:url(../images/strip1.png);
@@ -83,7 +83,7 @@ body a {
 }
 .banner-grids {
   top: -6em;
-  position: absolute;
+  position: relative;
 }
 .banner-top{
 	padding: 0;
@@ -93,9 +93,13 @@ body a {
 	font-weight: bold;
 }
 .banner-middle{
-	background:#FFF;
+	background-image:url(../images/bg.jpg);
 	padding:1em;
 	border: solid 1px #D5D5D5;
+	background-attachment: fixed;
+	background-position: 28%;
+	background-repeat: repeat;
+
 }
 .wrap{
 	width:90%;
@@ -103,7 +107,7 @@ body a {
 }
 .strip{
 	background:url(../images/strip2.png);
-	height:16px;
+	height:auto;
 	margin-bottom: 1em;
 }
 .thumb-slider {
@@ -123,7 +127,7 @@ body a {
   }
 .rslides li {
   -webkit-backface-visibility: hidden;
-  position: absolute;
+	position: relative;
   display: none;
   width: 100%;
   left: 0;
@@ -1469,7 +1473,7 @@ span.menu {
 	  min-height: 204em !important;
 	}
 	.nav-right {
-	  float: none;
+		float: right;
 	}
 	.contact-bg {
 	  min-height: 78em !important;
