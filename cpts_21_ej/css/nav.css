@@ -413,6 +413,7 @@ input#mobile_menu { display: none; }
 	}
 	.nav > li {
 		background:none;
+		width: 4em;
 	}
 	.nav li ul {
 		padding: 0;
