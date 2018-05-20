@@ -1,5 +1,6 @@
 extern crate elimination;
 use elimination::partialpivoting::solve;
+use elimination::partialpivoting::tests;
 
 fn main(){
     
@@ -25,7 +26,13 @@ fn main(){
 
     let B: Vec<f64> = vec![-15.0, 27.0, -23.0, 0.0, -20.0, 12.0, -7.0, 7.0, 10.0];
     
-    /*[test]
+    println!("根为: ");
+    for (i, iter) in solve(&A, &B).iter().enumerate() {
+        //println!("x{} = {:>20.14e}", i+1, iter);
+        println!(" {:>20.14e}", iter);
+    }
+    
+
     let A: Vec<Vec<f64>> = vec![
         vec![0.0003, 3.0000],
         vec![1.0000, 1.0000]
@@ -34,10 +41,10 @@ fn main(){
         2.0001,
         1.0000
     ];
-    */
 
-    for (i, iter) in solve(&A, &B).iter().enumerate() {
+    println!("根为:(直接法) ");
+    for (i, iter) in tests(&A, &B).iter().enumerate() {
         println!("x{} = {:>20.14e}", i+1, iter);
     }
-    
+
 }

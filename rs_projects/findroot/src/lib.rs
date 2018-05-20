@@ -1,7 +1,7 @@
 
 pub mod iteration{
     
-    const DELTA: f64 = 1e-10;       //容许误差
+    const DELTA: f64 = 1e-6;       //容许误差
     
     
     pub fn newton<T: Fn(f64)->f64, U: Fn(f64)->f64>(f:T, df:U, x0:f64) -> (f64, usize) {
