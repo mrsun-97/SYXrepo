@@ -62,16 +62,17 @@ fn main(){
         }
         println!("最佳松弛因子为：{:.2}", best_w);
     }
-    /*
-    for w in [0.02, 0.06, 0.10, 0.14, 0.18, 0.22].iter() {    //test
-        let (_, count) = sor(&A, &B, *w, 1000000);
-        print!("松弛因子：{:.2} , {}", w, i32::abs(count));
+    
+    for w in [1.9068, 1.9069, 1.907].iter() {    //test 1.9068 < w_0 < 1.9069
+        let (x, count) = sor(&A, &B, *w, 100000);
+        print!("松弛因子：{:.4} , {}", w, i32::abs(count));
         if count < 0 {
             println!("(截止)");
         }
         else {
             println!("");
         }
+        println!("{:#?}", x);
     }
-    */
+    
 }
