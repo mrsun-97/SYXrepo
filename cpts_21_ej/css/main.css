@@ -126,10 +126,10 @@ header {
   height: 4em;
   width: 4em;
   margin: 0 auto;
-  background: #222222;
+  background: #2c2c2c;
   border-radius: 50%;
   line-height: 3.2em;
-  margin-top: -3.4em;
+  margin-top: -3.2em;
   font-size: 1.25em;
   position: relative; /*???*/
 }

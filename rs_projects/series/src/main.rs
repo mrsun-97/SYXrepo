@@ -21,12 +21,12 @@ fn solve(x: f64) -> f64 {
         }
         else { panic!("We expect 'x' is positive, find x = {}" , x); }
     };
-    let mut tmp: f64 = 0.0;
+    let mut _tmp: f64 = 0.0;
     for i in 1..=n {
         let k = i as f64;
-        tmp = k*(k+x);
-        tmp = 1.0/tmp;
-        sum += tmp;
+        _tmp = k*(k+x);
+        _tmp = 1.0/_tmp;
+        sum += _tmp;
     }
     sum
 }

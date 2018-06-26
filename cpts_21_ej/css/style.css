@@ -824,7 +824,7 @@ content: '';
 }
 /*-- travel --*/
 .travel-bg {
-  min-height: 107em;
+  min-height: 80em;
 }
 .travel-bottom-left h2{
 	color:#666666;
@@ -1140,7 +1140,7 @@ span.menu {
 }
 @media(max-width:768px){
 	span.menu {
-	    display: block;
+	  display: block;
 	  cursor: pointer;
 	  float: none;
 	  margin: 0 auto 1em auto;
@@ -1148,7 +1148,7 @@ span.menu {
 	  color: #FFF;
 	  font-size: 16px;
 	  font-weight: 600;
-	    position: relative;
+	  position: relative;
 	}
 	.banner-bottom-right {
 		border-left: none;
