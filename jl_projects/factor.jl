@@ -1,3 +1,5 @@
+module Udf_fact
+
 function fact(num::Int)
     function private_fact(n::Int, tmp::Int)
         n == 0 && return tmp
@@ -7,3 +9,4 @@ function fact(num::Int)
     private_fact(num, 1)
 end
 
+end
