@@ -1,3 +1,7 @@
+*.pdf
+*.png
+*.jpg
+
 # C
 tmp/
 *.o
