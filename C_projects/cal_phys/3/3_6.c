@@ -105,11 +105,15 @@ int main(){
             arr[sy][sx] = 1;
         }
     }
+    float dh = 1.0, dk = 0.5*sqrtf(3), _x, _y;
     fprintf(fp, "%d\t%d\n", Len, Hei);
     for(i=0;i<Hei;i++){
         for(j=0;j<Len;j++){
             if(arr[i][j]!=0){
-                fprintf(fp, "%4d\t%4d\n", j, i);
+                //六边形网格的x，y坐标需要从下标(i，j)换算得出
+                _x = j*dh - (i-Hei/2)*0.5*dh;
+                _y = (i-Hei/2)*dk + 0.5*Len*dh;
+                fprintf(fp, "%4.2f\t%4.2f\n", _x, _y);
             }
         }
     }
