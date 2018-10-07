@@ -1,0 +1,11 @@
+compressed files
+*.zip
+*.rar
+*.tar.?z*
+
+#data
+*.dat
+*.txt
+
+#folder
+PB1602*/
