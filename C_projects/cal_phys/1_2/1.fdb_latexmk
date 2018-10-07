@@ -1,0 +1,18 @@
+# Fdb version 3
+["pdflatex"] 1538660088 "/home/syx/SYXrepo/C_projects/cal_phys/1_2/1.tex" "1.pdf" "1" 1538660088
+  "/home/syx/SYXrepo/C_projects/cal_phys/1_2/1.tex" 1538660087 105 77d1ee2f51f0b153c0abdf56df7f0a2d ""
+  "/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1536122179 35752 024fb6c41858982481f6968b5fc26508 ""
+  "/usr/share/texmf-dist/tex/latex/base/article.cls" 1536122179 19823 fcbc01552b07b608574cbf8e1977e0c0 ""
+  "/usr/share/texmf-dist/tex/latex/base/latex209.def" 1536122179 12117 d8c7a1c0271d3d8b67ac5f29d78059b6 ""
+  "/usr/share/texmf-dist/tex/latex/base/latexsym.sty" 1536122179 2856 7730103c7f3589c6c9d963ace57a7c18 ""
+  "/usr/share/texmf-dist/tex/latex/base/size10.clo" 1536122179 8294 b0f177401f895563eb19304d2389582d ""
+  "/usr/share/texmf-dist/tex/latex/base/tracefnt.sty" 1536122179 8597 ee711445e807c21c134f22a9b536d845 ""
+  "/usr/share/texmf-dist/web2c/texmf.cnf" 1536122179 33301 a3134070eacafb10b1f371612ce2650d ""
+  "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1538318512 350664 33013014a86e4fb34ef0f8e97a20b746 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1538318510 7908119 130df7c617bccad3066493970222e21c ""
+  "1.aux" 1538660088 8 a94a2480d3289e625eea47cd1b285758 ""
+  "1.tex" 1538660087 105 77d1ee2f51f0b153c0abdf56df7f0a2d ""
+  (generated)
+  "1.pdf"
+  "1.log"
+  "1.aux"

@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "prelude.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Enabled"
+}
