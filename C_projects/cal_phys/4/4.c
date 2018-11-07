@@ -1,7 +1,8 @@
 #include "prelude.h"
-#define N 20000000
-#define SEED 2333
+#define N 110000000
+#define SEED 1
 //N = 5e7;
+//下面为16807标准数据
 const int a0 = 16807, b0 = 0, m0 = 2147483647;
 static float Af[N]={-1.0};
 
@@ -18,14 +19,14 @@ int main(){
         printf("r >= q\n");
         return 1;
     }
-
+/*
     FILE *fp;
     fp = fopen("data.txt","w");
     if(!fp){
         printf("can't open data.txt\n");
         return 2;
     }
-
+*/
     int i, z0, z, rz;
     z = z0 = SEED;      //seed;
     for(i=0;i<m;i++){
@@ -40,26 +41,30 @@ int main(){
         z = z + b;
         z = z<0 ? z+m : z;
         if(i<N){
+            //根据I[n]计算第n个随机数I[n]/m，保证随机数属于[0,1)。
             Af[i] = (float)z/m;
         }
         if(z==z0){ break;}
     }
     z = i+1;
+/*
     fprintf(fp, "%d\n%d\n%d\n\n", a, b, m);
     for(i=0;i<N;i++){
         fprintf(fp,"%f\n", Af[i]);
     }
     fclose(fp);
+*/
 
-    //C(l)
+    //计算C(l)
     FILE *ft = fopen("cl.txt","w");
     if(!ft){
         printf("can't open cl.txt\n");
         return 3;
     }
-    fprintf(fp, "T = %d\t1-T/m = %lf\n\n", z, (double)(m-z)/m);
+    fprintf(ft, "T = %d\t1-T/m = %lf\n\n", z, (double)(m-z)/m);
     int l, n;
     float xn[5]={0}, dn[5]={0}, xnl, tmp;
+    //每次取出连续的n个数
     for(n=1000;n<N/5;n*=10){
         fprintf(ft, "n = %d\n", n);
         for(i=1;i<5;i++){
@@ -73,6 +78,7 @@ int main(){
             xn[3] += tmp*Af[i];
             xn[4] += tmp*tmp;
         }
+        //xn[k]分别表示k阶矩
         xn[1] /= n;
         xn[2] /= n;
         xn[3] /= n;
@@ -84,7 +90,7 @@ int main(){
             dn[i] = fabsf(xn[i]-tmp)/tmp*100;
         }
         fprintf(ft, "delta\t\t%-7.3f%%\t%-7.3f%%\t%-7.3f%%\t%-7.3f%%\n", dn[1], dn[2], dn[3], dn[4]);
-        fprintf(ft, "  l \t |C(l)| \n");
+        fprintf(ft, "   l\t |C(l)| \n");
         for(l=1;l<n/2;l*=10){
             xnl = 0.0;
             for(i=100 ;i<n+100;i++){
@@ -93,7 +99,7 @@ int main(){
             xnl /= n;
             tmp = xn[1]*xn[1];
             tmp = (xnl-tmp)/(xn[2]-tmp);
-            fprintf(ft, "%6d\t%f\n", l, fabsf(tmp));
+            fprintf(ft, "%7d\t%f\n", l, fabsf(tmp));
         }
     }
     fclose(ft);

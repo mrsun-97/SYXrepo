@@ -9,3 +9,7 @@ compressed files
 
 #folder
 PB16020865*/
+
+#tex files
+texfile/
+!texfile/*.tex
