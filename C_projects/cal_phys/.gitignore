@@ -3,6 +3,9 @@ compressed files
 *.rar
 *.tar.?z*
 
+*.doc
+*.docx
+
 #data
 *.dat
 *.txt
