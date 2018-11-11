@@ -60,8 +60,8 @@ pub mod solve{
         y.reserve(n-2);
         //println!("{}", y.len());
         let mut ff: Vec<f64> = Vec::with_capacity(n-1);
-        for i in 0..2 {
-            ff.push(f(a+h*(i as f64),y[i]));
+        for (i, yi) in y.iter().enumerate().take(2) {
+            ff.push(f(a+h*(i as f64), *yi));
         }
         let mut xn: f64 = 0.0;
 

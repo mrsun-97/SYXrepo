@@ -1,0 +1,10 @@
+[package]
+name = "HBTlib"
+version = "0.1.0"
+authors = ["syx <syx6@mail.ustc.edu.cn>"]
+
+[lib]
+name = "HBTlib"
+crate-type = ["dylib"]
+
+[dependencies]

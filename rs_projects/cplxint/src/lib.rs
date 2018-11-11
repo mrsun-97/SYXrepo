@@ -6,7 +6,7 @@ pub mod integrate{
         if k > 50 {
             panic!("The number is not proper!\n");
         }
-        if b == a {
+        if (b-a).abs() < 1e3*std::f64::EPSILON {
             panic!("The top meets the bottom!\n");
         }
         
@@ -35,7 +35,7 @@ pub mod integrate{
         //利用Romberg积分简化计算
         let S = t_integrate(f, a, b, k+1);
         let mut T: Vec<f64> = Vec::with_capacity(k+1);
-        for i in 0..k+1 {
+        for i in 0..=k {
             T.push(
                 (4.0*S[i+1]-S[i])/3.0
             )
