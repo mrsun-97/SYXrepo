@@ -8,7 +8,7 @@ double randi(void){
     return rand()/((double)RAND_MAX + 1);
 }
 
-double randj(void){
+double randj(void){ //[-1, +1]
     return 2*randi()-1;
 }
 
