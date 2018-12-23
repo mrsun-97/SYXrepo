@@ -1,0 +1,65 @@
+\documentclass[utf8]{ctexart}
+\author{syx}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{ulem}
+\usepackage{microtype}
+
+\begin{document}
+	\section*{问题17\quad 关于相空间等问题的讨论}
+	
+	对于相空间，每个人都有不同的看法，下面我就A、B同学的讨论内容谈一谈我的理解。\\
+
+	首先A同学对相空间的理解是片面的，不正确的。对于一个哈密顿体系，其相空间由
+	广义坐标与广义动量构成，这里的广义坐标与广义动量不必是体系的真实位置与动量坐标。下面给出两个直观的反例：
+
+	1、对于刚体绕质心的定点转动问题，刚体的运动没有位移产生，动量也恒为零，但是这并不能导出该系统系综的态密度仅仅是哈密顿量$\mathrm{H}$的函数。事实上对于对于无穷个这样的系统，由于我们对其系综性质未做任何假定(正则、微正则等)，所以其态密度可以是随意给定的函数。
+
+	2、我们可以利用一个生成函数$F(q,p,t)$诱导的正则变换对任给$\mathrm{H}$进行变换。特别的，当我们选择的生成函数满足$\frac{\partial{F}}{\partial{t}}=-\mathrm{H}$
+	(H-J方程)时，正则变换将$H$变为0，所有坐标变为循环坐标，失去了原有的位置与动量的物理意义。\\
+
+	另外，正如B同学所说，我们用哈密顿量$\mathrm{H}$研究一个系统时，要求系统的状态被广义坐标$(p,q)$完全描述，否则说明我们无法掌握整个系统的演化，这样的$\mathrm{H}$不是有效的、完整的哈密顿量。\\
+	
+	对于刘维尔定理，其内容是不可压缩流体的性质应用于相流时的特例。对于常微分方程$\mathrm{d}\mathbf{x}/\mathrm{d}t=\mathbf{f},\,\mathbf{x}=(x^1,\dots,x^n)$，其解可以表示为：
+	\[\mathbf{x}_t=\mathbf{x}_0+\mathbf{f}(\mathbf{x}_0)t+\mathrm{O}(t^2)\quad t\to0 \]
+	现在研究其体积的变化:
+	\[V(t)=\int_{D(t)}\mathrm{d}\mathbf{x}
+	=\int_{D(0)}\left|\frac{\partial{\mathbf{x}_t}}{\partial{\mathbf{x}_0}}\right| \mathrm{d}\mathbf{x} \]
+	经过一些推导我们最终可以得到
+	\[\left. \frac{\mathrm{d}V}{\mathrm{d}t}\right|_{t=0}
+	=\int_{D(0)}\nabla \cdot\mathbf{f}\,\mathrm{d}\mathbf{x}\]
+	而零时刻的选取是任意的，因此当$\mathbf{f}$恒为无源场时，体积就保持不变。
+	\clearpage\noindent
+	对于哈密顿力学中
+	\[\mathbf{x}=\begin{bmatrix}
+	\mathbf{q}\\
+	\mathbf{p}     
+	\end{bmatrix},\,
+	\mathbf{f}=\begin{bmatrix}
+	\mathbf{\nabla_p}\mathrm{H}\\
+	-\mathbf{\nabla_q}\mathrm{H}     
+	\end{bmatrix}\,
+	\Rightarrow\,
+	\nabla \cdot\mathbf{f}=\mathbf{\nabla_q}\cdot\mathbf{\nabla_p}\mathrm{H}
+	-\mathbf{\nabla_p}\cdot\mathbf{\nabla_q}\mathrm{H}=0
+	\]
+	因此相空间体积不变，从而得到态密度守恒的结论。
+	注意到在以上的推导中，我们默认了一些基本条件，即$\nabla\cdot\mathbf{f}$可积。进一步分析，我们发现最根本的条件是，H关于$(\mathbf{q},\mathbf{p})$有二阶连续偏导数。
+	如果不满足上述条件，那么关于Liouvill定理的推导就无法进行下去，也就无法说明其是否成立。\\
+
+	关于Ising模型，我们无法说明Liouvill定理是否成立。事实上，我们没有必要说明其是否成立，因为在Ising模型中，状态数总共只有$2^N$个,态密度的概念在此并不适用。离散分布看似使系统的状态变得简单，但实际上又引入了另一个问题，即Boltzmann分布是否仍然成立？\\
+
+	在系综理论中，我们不可避免的会使用形如$\int_{\Delta E}A(\mathbf{q},\mathbf{p})\mathrm{d}\Omega$的积分，如果积分变量的取值仅仅为有限个格点而不是连续的空间，那我们如何定义上述积分？我尝试了两种方法：\\
+	1、将积分变为离散的求和，但这样由于能级离散，我们在推导时取的无穷小间隔等能面间可能不存在任何对应状态，能量曲面以及定义在其上的均匀分布假设也都将无法定义，很难类比连续的情况得出合理的结论。\\
+	2、认为$(\mathbf{q},\mathbf{p})$仍然连续，但是其被封装在阶跃函数中，例如
+	\[\mathrm{H}=\sum_{i,j}-J_{ij}\vartheta(\sigma_i\sigma_{j}),\quad\text{其中}\,\vartheta(x)=\mathrm{sgn}(x)=2\Theta(x)-1
+	\]
+	这样整个相空间除了过零点的N个超平面外都是连续的。但是这种方法会使任意等能面面积发散，因此态密度$\rho(\mathrm{H}(\mathbf{q},\mathbf{p}))$必须恒为零。这时如果不想办法消除发散，依然无法得出正确的结论。这里的哈密顿量提示我们Ising模型并不是一个真实的物理系统，$\vartheta(x)$的作用其实就是重整化，因为模型中的单个自旋对应的实际上是一个经过重整化的物理无穷小区域的块平均自旋，因此得出的结果并不那么“物理”也是可以理解的。\\
+
+	为了说明Boltzmann分布在广义坐标、能量都离散的系统中是否成立，我们可以暂时避开系综理论，采用另外一种方式：最大信息熵原理。这种方法认为当系统可以有多种满足约束的概率分布时，总是取包含其他信息最少的状态，即对应信息熵最大的状态。其结论是，对于系统中的M个随机变量$f_{\,i}^{(j)},\,j=1,2,\dots M$，其期望值$F_j=\sum_{i=1}^{n}f_{\,i}^{(j)}p_i\,(j=1,2,\dots M)$已知，则满足信息熵最大的分布具有以下形式：
+	\[p_i=\exp(-1-\alpha-\sum_{j=1}^{M}\beta_j f_{\,i}^{(j)}),\quad(i=1,2,\dots n)\]
+	其中$f_{\,i}^{(j)}$表示第j个随机变量在状态i中的取值。\\
+	应用于N粒子在离散有下界能级中的分布时，即可得到Boltzmann分布：
+	\[\overline{N}_i=\frac{N}{\sum_{i=1}^n g_i e^{-E_i/kT}}\cdot g_i\cdot e^{-E_i/kT} \]
+	这样我们就不必将自旋与相空间中的广义坐标对应，不必将连续系统中的结论强行应用到离散系统上，依然可以得到Ising模型中不同自旋分布出现的概率。
+\end{document}
