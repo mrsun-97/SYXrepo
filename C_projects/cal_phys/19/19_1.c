@@ -5,12 +5,12 @@ typedef struct {
     double y;
 }position, *point;
 
-const double sigma_x = 0.2;
-const double sigma_y = 0.8;
-const double Delta_r = 1.25;    //步长最大值
+const double sigma_x = 5*1.414;
+const double sigma_y = 0.1;
 const double beta = 2.0;
-const int N = (int)1e5;         //抽样数量
-int seed = 2;
+const int N = (int)1e5;
+double Delta_r = 0.4;
+int seed = 0;
 
 //哈密顿量
 double Ham(double x, double y){
@@ -24,9 +24,8 @@ void next(point Q){
     double dr = Delta_r*randi(), da = 2*PI*randi();
     double xt = Q->x + dr*cos(da), yt = Q->y + dr*sin(da);
     double r = exp(-beta*(Ham(xt,yt)-Ham(Q->x,Q->y)));
-
-    if(randi()>=r) return;  //x{n+1}=x{n}
-    else {                  //x{n+1}=x{n} + δx
+    if(randi()>=r) return;
+    else {
         Q->x = xt;
         Q->y = yt;
     }
@@ -47,7 +46,7 @@ point init(int n){
     while(i-->0){
         next(Q);
     }
-    printf("Initialized.\n");
+    //printf("Initialized.\n");
     return Q;
 }
 
@@ -70,36 +69,49 @@ double x2_plus_y2(point Q){
     return a*a+b*b;
 }
 
-///////////////////////////////////////////////
 
 int main(){
-    FILE* fp = fopen("data.txt", "w");
+    FILE* fp = fopen("data_1.txt", "w");
     if(!fp){
         printf("can't open data.txt\n");
         return 1;
-    }
-    srand(seed);
-    point Q = init(N/100);
-    int i;
+    }       
     double exa[3] = {0};
     exa[0] = sigma_x*sigma_x/beta;
     exa[1] = sigma_y*sigma_y/beta;
     exa[2] = exa[0] + exa[1];
+    int k = 0;
+    for(k=0;k<=5;k++){
+        fprintf(fp,"$%.2lf$ ", Delta_r);
+        double sqrtsig2=0;
 
-    double sum[3] = {0,0,0};
-    //开始抽样
-    for(i=0;i<N;i++){
-        next(Q);
-        sum[0] += evaluate(x_square, Q);
-        sum[1] += evaluate(y_square, Q);
-        sum[2] += evaluate(x2_plus_y2, Q);
-        fprintf(fp,"%.4lf\t%.4lf\n", Q->x, Q->y);
+        for(seed=1;seed<10;seed++){
+            srand(seed);
+            point Q = init(N/100);
+            int i;
+            double sum[3] = {0,0,0};
+            //开始抽样
+            for(i=0;i<N;i++){
+                next(Q);
+                //sum[0] += evaluate(x_square, Q);
+                //sum[1] += evaluate(y_square, Q);
+                sum[2] += evaluate(x2_plus_y2, Q);
+                //fprintf(fp,"%.4lf\t%.4lf\n", Q->x, Q->y);
+            }
+            //输出结果
+            for(i=2;i<3;i++){
+                double real = sum[i]/N, exact = exa[i];
+                exact = (real-exact)/exact*100;
+                fprintf(fp, "&%5.2lf ", exact);
+                sqrtsig2 += exact*exact;
+            }
+        }
+        //直接输出Latex代码
+        fprintf(fp, "&%.2lf ", sqrt(sqrtsig2/9.0));
+        fprintf(fp, "\\\\ \\hline\n");
+        printf("%d\n",k);
+        Delta_r *= 5;
     }
-    //输出结果
-    for(i=0;i<3;i++){
-        fprintf(fp, "%.4lf\t%.4lf\n", sum[i]/N, exa[i]);
-    }
-
     fclose(fp);
     return 0;
 }
