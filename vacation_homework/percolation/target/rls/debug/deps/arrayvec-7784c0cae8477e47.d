@@ -1,0 +1,11 @@
+/home/syx/SYXrepo/vacation_homework/percolation/target/rls/debug/deps/arrayvec-7784c0cae8477e47.rmeta: /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/lib.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/maybe_uninit_nodrop.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/array.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/array_string.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/char.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/range.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/errors.rs
+
+/home/syx/SYXrepo/vacation_homework/percolation/target/rls/debug/deps/arrayvec-7784c0cae8477e47.d: /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/lib.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/maybe_uninit_nodrop.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/array.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/array_string.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/char.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/range.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/errors.rs
+
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/lib.rs:
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/maybe_uninit_nodrop.rs:
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/array.rs:
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/array_string.rs:
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/char.rs:
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/range.rs:
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/arrayvec-0.4.10/src/errors.rs:
