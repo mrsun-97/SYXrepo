@@ -25,6 +25,16 @@ struct Graph {
     graph: Vec<Vec<Site>>,
 }
 
+#[derive(Clone)]
+enum Bnum {
+    index(usize),
+    number(u32),
+}
+
+fn get_num(v: &Vec<Bnum>) -> u32 {
+    1
+}
+
 #[allow(dead_code)]
 impl Site {
     //! true  -> 1
@@ -38,7 +48,7 @@ impl Site {
 
     fn hold(&mut self) {
         self.sited = true;
-        self.num = 0;
+        self.num = u32::max_value();
     }
 
     fn inv(&mut self) {
@@ -77,7 +87,7 @@ impl Graph {
         }
     }
 
-    fn put_one<T: Rng>(&mut self, rng:&mut T) {
+    fn put_one<T: Rng>(&mut self, rng:&mut T, n:u32) {
         let (x0, y0, theta) = rng.gen::<(f64,f64,f64)>();
         let x0 = x0 * (self.x_length as f64 + 2.0*R2) - R2;
         let y0 = y0 * (self.y_length as f64 + 2.0*R2) - R2;
@@ -94,19 +104,21 @@ impl Graph {
                 if modpi(f64::atan2(y,x), theta) <= PHI {
                     let r2 = x*x + y*y;
                     if r2 > R1*R1 && r2 <= R2*R2 {
-                        self.graph[i][j].hold();
+                        self.graph[i][j].mark(n);
                     }
                 }
             }
         }
     }//end fn
 
-    fn find_way(&mut self) -> u32 {
+    fn find_way(&mut self, n:u32) {
         let xd = self.x_length-2;
         let yd = self.y_length-2;
         //初始化上下边界
         for i in 0..self.x_length {
             self.graph[0][i].mark(1);
+            self.graph[1][i].mark(1);
+            self.graph[yd][i].mark(2);
             self.graph[yd+1][i].mark(2);
         }
         //截断左右边界
@@ -114,9 +126,8 @@ impl Graph {
             self.graph[j][0].erase();
             self.graph[j][xd+1].erase();
         }
+        
         //对每个可能独立的集团编号
-        let mut number: u32 = 3;
-        //let mut tmp: u32;
         for yi in 1..=yd {
             for xj in 1..=xd {
                 if self.graph[yi][xj].is_sited() != None {
@@ -128,11 +139,52 @@ impl Graph {
                         self.graph[yi][xj].mark(tmp);
                         continue;
                     }
-                    self.graph[yi][xj].mark(number);
-                    number +=1;
                 }
             }
         }
+        
+        let number = n as usize + 1;
+        let mut bvec: Vec<Bnum> = Vec::with_capacity(number);
+        for i in 0..number {
+            bvec.push(Bnum::number(i as u32));
+        }
+        for y in 1..=yd {
+            for x in 1..=xd {
+                if let Some(local) = self.graph[y][x].is_sited() {
+                    if let Some(tmp) = self.graph[y][x+1].is_sited() {
+                        if tmp != local {
+                            bvec[u32::max(local,tmp) as usize] = Bnum::index(u32::min(local,tmp) as usize);
+                        }
+                    }
+                    if let Some(tmp) = self.graph[y+1][x].is_sited() {
+                        if tmp != local {
+                            bvec[u32::max(local,tmp) as usize] = Bnum::index(u32::min(local,tmp) as usize);
+                        }
+                    }
+                }
+            }
+        }
+        //逻辑上合并集团
+        for i in 0..number {
+            let mut temp = i;
+            while let Bnum::index(tmp) = bvec[temp] {
+                temp = tmp;
+            }
+            bvec[i] = bvec[temp].clone();
+        }
+        for y in 1..=yd {
+            for x in 1..=xd {
+                if self.graph[y][x].is_sited() != None {
+                    if let Bnum::number(tmp) = bvec[self.graph[y][x].num as usize] {
+                        self.graph[y][x].num = tmp;
+                    } else {
+                        panic!("error1");
+                    }
+                }
+            }
+        }
+
+        /*
         println!("---> ");
         //定义一次遍历
         let mut f = |xa:usize,xb:usize,ya:usize,yb:usize| -> bool {
@@ -182,6 +234,8 @@ impl Graph {
         f(1,xd,yd+1,yd+1);
         f(xd,1,yd+1,yd+1);
         self.graph[yd+1][1].num
+        */
+
     }
 }
 
@@ -206,13 +260,14 @@ fn main() {
     print!("initializing random number generator... ");
     let mut rng = Xoshiro256StarStar::seed_from_u64(2);
     println!("done");
-    print!("puting circles on the lattice... ");
-    for _i in 0..4000 {
-        g.put_one(&mut rng);
+    println!("puting circles on the lattice... ");
+    let end: usize = 4000;
+    for i in 3..end {
+        g.put_one(&mut rng, i as u32);
     }
     println!("done");
     println!("calculating...");
-    g.find_way();
+    g.find_way(end as u32);
     println!("finished calculating, now drawing...");
     //绘图
     /*
@@ -236,6 +291,6 @@ fn main() {
         }
     });
     img1.save("img1.png").unwrap();
-    println!("finished")
+    println!("finished");
 }
 
