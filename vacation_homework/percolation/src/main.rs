@@ -10,7 +10,7 @@ use rand_xoshiro::Xoshiro256StarStar;
 
 const PI: f64 = f64::consts::PI;
 const R1: f64 = 100.0;
-const R2: f64 = 110.0;
+const R2: f64 = 104.0;
 const PHI: f64 = PI / 2.0;
 
 #[derive(Debug, Clone)]
@@ -253,7 +253,7 @@ fn main() {
         let mut rng = Xoshiro256StarStar::seed_from_u64(count as u64);
         println!("done");
         println!("puting circles on the lattice... ");
-        let end: usize = 7000;
+        let end: usize = 6000;
         for i in 3..end {
             g.put_one(&mut rng, i as Utype);
         }
@@ -282,13 +282,14 @@ fn main() {
                 image::Rgb([0xFF, 0xFF, 0xFF])
             }
         });
-        if let Some(vec) = g.graph[y as usize-2][1].check() {
+        if let Some(vec) = g.graph[y as usize - 2][1].check() {
             if bvec[vec[0]] == 1 {
                 succeed += 1;
             }
         }
-        println!("finished {}\n",count);
-        img1.save("img".to_string()+&count.to_string()+".png").unwrap()
+        println!("finished {}\n", count);
+        img1.save("./img/img".to_string() + &count.to_string() + ".png")
+            .unwrap()
     }
     println!("Probability: {}", succeed as f32 / total as f32);
 }
