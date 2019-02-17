@@ -1,17 +1,15 @@
 extern crate image;
-use image::{
-    ImageBuffer
-};
+use image::ImageBuffer;
 
 use std::f64;
 //use std::cmp::{min, max};
-use rand::{Rng,SeedableRng};
+use rand::{Rng, SeedableRng};
 use rand_xoshiro::Xoshiro256StarStar;
 
-const PI:f64 = f64::consts::PI;
-const R1:f64 = 100.0;
-const R2:f64 = 110.0;
-const PHI:f64 = PI/2.0;
+const PI: f64 = f64::consts::PI;
+const R1: f64 = 100.0;
+const R2: f64 = 110.0;
+const PHI: f64 = PI / 2.0;
 
 #[derive(Clone)]
 struct Site {
@@ -69,80 +67,78 @@ impl Site {
     fn is_sited(&self) -> Option<u32> {
         if self.sited {
             Option::Some(self.num)
-        }
-        else {
+        } else {
             Option::None
         }
     }
-
 }
 
 impl Graph {
-    fn new(x_length:usize, y_length:usize) -> Graph {
+    fn new(x_length: usize, y_length: usize) -> Graph {
         Graph {
             x_length,
             y_length,
             //Graph[y][x], Graph[0][0]--upperleft
-            graph: vec![vec![Site::new();x_length]; y_length],
+            graph: vec![vec![Site::new(); x_length]; y_length],
         }
     }
 
-    fn put_one<T: Rng>(&mut self, rng:&mut T, n:u32) {
-        let (x0, y0, theta) = rng.gen::<(f64,f64,f64)>();
-        let x0 = x0 * (self.x_length as f64 + 2.0*R2) - R2;
-        let y0 = y0 * (self.y_length as f64 + 2.0*R2) - R2;
-        let theta = (2.0*theta-1.0)*PI;
+    fn put_one<T: Rng>(&mut self, rng: &mut T, n: u32) {
+        let (x0, y0, theta) = rng.gen::<(f64, f64, f64)>();
+        let x0 = x0 * (self.x_length as f64 + 2.0 * R2) - R2;
+        let y0 = y0 * (self.y_length as f64 + 2.0 * R2) - R2;
+        let theta = (2.0 * theta - 1.0) * PI;
         //确定扫描范围，防止越界。
-        let ya = f64::max((y0-R2).floor(), 0.0) as usize;
-        let xa = f64::max((x0-R2).floor(), 0.0) as usize;
-        let yb = f64::min((y0+R2).ceil(), self.y_length as f64 - 1.0) as usize;
-        let xb = f64::min((x0+R2).ceil(), self.x_length as f64 - 1.0) as usize;
+        let ya = f64::max((y0 - R2).floor(), 0.0) as usize;
+        let xa = f64::max((x0 - R2).floor(), 0.0) as usize;
+        let yb = f64::min((y0 + R2).ceil(), self.y_length as f64 - 1.0) as usize;
+        let xb = f64::min((x0 + R2).ceil(), self.x_length as f64 - 1.0) as usize;
         for i in ya..=yb {
             for j in xa..=xb {
                 let x = j as f64 - x0;
                 let y = i as f64 - y0;
-                if modpi(f64::atan2(y,x), theta) <= PHI {
-                    let r2 = x*x + y*y;
-                    if r2 > R1*R1 && r2 <= R2*R2 {
+                if modpi(f64::atan2(y, x), theta) <= PHI {
+                    let r2 = x * x + y * y;
+                    if r2 > R1 * R1 && r2 <= R2 * R2 {
                         self.graph[i][j].mark(n);
                     }
                 }
             }
         }
-    }//end fn
+    } //end fn
 
-    fn find_way(&mut self, n:u32) {
-        let xd = self.x_length-2;
-        let yd = self.y_length-2;
+    fn find_way(&mut self, n: u32) {
+        let xd = self.x_length - 2;
+        let yd = self.y_length - 2;
         //初始化上下边界
         for i in 0..self.x_length {
             self.graph[0][i].mark(1);
             self.graph[1][i].mark(1);
             self.graph[yd][i].mark(2);
-            self.graph[yd+1][i].mark(2);
+            self.graph[yd + 1][i].mark(2);
         }
         //截断左右边界
         for j in 1..=yd {
             self.graph[j][0].erase();
-            self.graph[j][xd+1].erase();
+            self.graph[j][xd + 1].erase();
         }
-        
+
         //对每个可能独立的集团编号
         for yi in 1..=yd {
             for xj in 1..=xd {
                 if self.graph[yi][xj].is_sited() != None {
-                    if let Some(tmp) = self.graph[yi-1][xj].is_sited() {
+                    if let Some(tmp) = self.graph[yi - 1][xj].is_sited() {
                         self.graph[yi][xj].mark(tmp);
                         continue;
                     }
-                    if let Some(tmp) = self.graph[yi][xj-1].is_sited() {
+                    if let Some(tmp) = self.graph[yi][xj - 1].is_sited() {
                         self.graph[yi][xj].mark(tmp);
                         continue;
                     }
                 }
             }
         }
-        
+
         let number = n as usize + 1;
         let mut bvec: Vec<Bnum> = Vec::with_capacity(number);
         for i in 0..number {
@@ -151,16 +147,20 @@ impl Graph {
         for y in 1..=yd {
             for x in 1..=xd {
                 if let Some(local) = self.graph[y][x].is_sited() {
-                    if let Some(tmp) = self.graph[y][x+1].is_sited() {
+                    if let Some(tmp) = self.graph[y][x + 1].is_sited() {
                         if tmp != local {
-                            bvec[u32::max(local,tmp) as usize] = Bnum::index(u32::min(local,tmp) as usize);
+                            let e = u32::max(local, tmp) as usize;
+                            if let Bnum::number(_) = bvec[e] {
+                                bvec[e] = Bnum::index(u32::min(local, tmp) as usize);
+                            }
                         }
                     }
+                    /*
                     if let Some(tmp) = self.graph[y+1][x].is_sited() {
                         if tmp != local {
                             bvec[u32::max(local,tmp) as usize] = Bnum::index(u32::min(local,tmp) as usize);
                         }
-                    }
+                    }*/
                 }
             }
         }
@@ -170,6 +170,7 @@ impl Graph {
             while let Bnum::index(tmp) = bvec[temp] {
                 temp = tmp;
             }
+            //println!("{}->{}",i, temp);
             bvec[i] = bvec[temp].clone();
         }
         for y in 1..=yd {
@@ -235,25 +236,24 @@ impl Graph {
         f(xd,1,yd+1,yd+1);
         self.graph[yd+1][1].num
         */
-
     }
 }
 
 //给定两角度[-pi,pi]，求出二者之差，[0,pi]
-fn modpi(theta1:f64, theta2:f64) -> f64 {
-    let a:f64 = (theta1-theta2).abs();
+fn modpi(theta1: f64, theta2: f64) -> f64 {
+    let a: f64 = (theta1 - theta2).abs();
     if a <= PI {
         a
     } else {
-        2.0*PI - a
+        2.0 * PI - a
     }
 }
 
 //fn output();
 
 fn main() {
-    let x :u32= 10240;
-    let y :u32= 10240;
+    let x: u32 = 10240;
+    let y: u32 = 10240;
     print!("generating lattice... ");
     let mut g = Graph::new(x as usize, y as usize);
     println!("done");
@@ -281,16 +281,15 @@ fn main() {
         let site = &g.graph[b as usize][a as usize];
         if !site.sited {
             //白背景
-            image::Rgb([0xFF,0xFF,0xFF])
+            image::Rgb([0xFF, 0xFF, 0xFF])
         } else {
             match site.num {
-                1 => image::Rgb([0xFF,0x00,0x33]),  //red
-                2 => image::Rgb([0x00,0x33,0xFF]),  //blue
-                _ => image::Rgb([0x66,0x33,0x33]),
+                1 => image::Rgb([0xFF, 0x00, 0x33]), //red
+                2 => image::Rgb([0x00, 0x33, 0xFF]), //blue
+                _ => image::Rgb([0x66, 0x33, 0x33]),
             }
         }
     });
     img1.save("img1.png").unwrap();
     println!("finished");
 }
-
