@@ -244,7 +244,7 @@ fn main() {
     let x: u32 = 10240;
     let y: u32 = 10240;
     let mut succeed = 0;
-    let total = 20;
+    let total = 8;
     for count in 1..=total {
         print!("generating lattice... ");
         let mut g = Graph::new(x as usize, y as usize);
@@ -253,7 +253,7 @@ fn main() {
         let mut rng = Xoshiro256StarStar::seed_from_u64(count as u64);
         println!("done");
         println!("puting circles on the lattice... ");
-        let end: usize = 5000;
+        let end: usize = 7000;
         for i in 3..end {
             g.put_one(&mut rng, i as Utype);
         }
