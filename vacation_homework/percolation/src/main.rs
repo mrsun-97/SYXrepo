@@ -250,6 +250,18 @@ impl Graph {
         //返回对照表
         bvec
     }
+
+    fn get_pc(&self) -> f64 {
+        let mut count = 0_u64;
+        for i in 0..self.y_length {
+            for j in 0..self.x_length {
+                if self.graph[i][j].site.is_some() {
+                    count += 1;
+                }
+            }
+        }
+        count as f64/self.x_length as f64/self.y_length as f64
+    }
 }
 
 //给定两角度[-pi,pi]，求出二者之差，[0,pi]
@@ -267,47 +279,64 @@ fn modpi(theta1: f64, theta2: f64) -> f64 {
 fn main() {
     let x: u32 = 10240;
     let y: u32 = 10240;
-    let mut succeed = 0;
-    let total = 3;
-    for count in 1..=total {
-        print!("generating lattice... ");
-        let mut g = Graph::new(x as usize, y as usize);
-        println!("done");
-        print!("initializing random number generator... ");
-        let mut rng = Xoshiro256StarStar::seed_from_u64(count as u64);
-        println!("done");
-        println!("puting circles on the lattice... ");
-        let end: usize = 6000;
-        for i in 3..end {
-            g.put_one(&mut rng, i as Utype);
-        }
-        println!("done");
-        println!("calculating...");
-        let bvec = g.find_way(end as Utype);
-        println!("finished calculating, now drawing...");
+    let total = 9;      //每种pc统计次数
+    let mut g: Graph;   //二维网格
+    let lmax = 10;
+    let mut pvec: Vec<(f64,f64)> = Vec::with_capacity(lmax);
+    for l in 1..=lmax {
+        let mut pc = 0_f64;
+        let end: usize = l * 1000;
+        let mut succeed = 0;
+        for count in 1..=total {
+            print!("generating lattice... ");
+            g = Graph::new(x as usize, y as usize);
+            println!("done");
+            print!("initializing random number generator... ");
+            let mut rng = Xoshiro256StarStar::seed_from_u64((count*l*l) as u64);
+            println!("done");
+            println!("puting circles on the lattice... ");
 
-        //绘图
-        let img1 = ImageBuffer::from_fn(x, y, |a, b| {
-            let site = &g.graph[b as usize][a as usize];
-            if let Some(vec1) = site.check() {
-                match bvec[vec1[0]] {
-                    1 => image::Rgb([0xFF, 0x00, 0x33]), //red
-                    2 => image::Rgb([0x00, 0x33, 0xFF]), //blue
-                    _ => image::Rgb([0x66, 0x33, 0x33]),
+            for i in 3..end {
+                g.put_one(&mut rng, i as Utype);
+            }
+            println!("done");
+            println!("calculating...");
+            let bvec = g.find_way(end as Utype);
+            println!("finished calculating, now drawing...");
+
+            //绘图
+            let img1 = ImageBuffer::from_fn(x, y, |a, b| {
+                let site = &g.graph[b as usize][a as usize];
+                if let Some(vec1) = site.check() {
+                    match bvec[vec1[0]] {
+                        1 => image::Rgb([0xFF, 0x00, 0x33]), //red
+                        2 => image::Rgb([0x00, 0x33, 0xFF]), //blue
+                        _ => image::Rgb([0x66, 0x33, 0x33]),
+                    }
+                } else {
+                    //白背景
+                    image::Rgb([0xFF, 0xFF, 0xFF])
                 }
-            } else {
-                //白背景
-                image::Rgb([0xFF, 0xFF, 0xFF])
+            });
+            //检查上下边界是否连通
+            if let Some(vec) = g.graph[y as usize - 2][1].check() {
+                if bvec[vec[0]] == 1 {
+                    succeed += 1;
+                }
             }
-        });
-        //检查上下边界是否连通
-        if let Some(vec) = g.graph[y as usize - 2][1].check() {
-            if bvec[vec[0]] == 1 {
-                succeed += 1;
-            }
+            pc += g.get_pc();
+            println!("finished {}\n", count);
+            img1.save("./img/img".to_string() + &count.to_string() + ".png").unwrap()
         }
-        println!("finished {}\n", count);
-        img1.save("./img/img".to_string() + &count.to_string() + ".png").unwrap()
+        let _pc = pc/total as f64;
+        let _pt =  succeed as f64 / total as f64;
+        println!("pc = {:.4}, Probability: {:.4}\n", _pc, _pt);
+        println!("******************************\n");
+        pvec.push((_pc, _pt));
     }
-    println!("Probability: {:.2}", succeed as f32 / total as f32);
+    print!("list:\n pc\tp\n");
+    for (pc, p) in pvec {
+        print!("{:.4}\t{:.4}\n", pc, p);
+    }
+    println!("all finished!\n");
 }
