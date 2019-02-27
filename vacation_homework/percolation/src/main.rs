@@ -9,9 +9,13 @@ use rand::{Rng, SeedableRng};
 use rand_xoshiro::Xoshiro256StarStar;
 
 const PI: f64 = f64::consts::PI;
-const R1: f64 = 100.0;
-const R2: f64 = 104.0;
-const PHI: f64 = PI / 2.0;
+const R1: f64 = 20.0;
+const R2: f64 = 21.5;
+// const SIG0: f64 = 0.0;
+// const SIG1: f64 = 1.0;
+// const SIGINF: f64 = 10_000.0;
+const RES: f64 = 1.0;
+//const PHI: f64 = PI / 2.0;
 
 #[derive(Debug, Clone)]
 struct Site {
@@ -24,6 +28,8 @@ struct Graph {
     y_length: usize,
     graph: Vec<Vec<Site>>,
 }
+
+
 
 #[allow(dead_code)]
 impl Site {
@@ -105,10 +111,11 @@ impl Graph {
 
     //画一个图形，其标号为n
     fn put_one<T: Rng>(&mut self, rng: &mut T, n: Utype) {
-        let (x0, y0, theta) = rng.gen::<(f64, f64, f64)>();
+        let (x0, y0, theta, phi) = rng.gen::<(f64, f64, f64, f64)>();
         let x0 = x0 * (self.x_length as f64 + 2.0 * R2) - R2;
         let y0 = y0 * (self.y_length as f64 + 2.0 * R2) - R2;
         let theta = (2.0 * theta - 1.0) * PI;
+        let phi = (7.0/8.0 * phi + 1.0/16.0)* PI ;
         //确定扫描范围，防止越界。
         let ya = f64::max((y0 - R2).floor(), 0.0) as usize;
         let xa = f64::max((x0 - R2).floor(), 0.0) as usize;
@@ -118,7 +125,7 @@ impl Graph {
             for j in xa..=xb {
                 let x = j as f64 - x0;
                 let y = i as f64 - y0;
-                if modpi(f64::atan2(y, x), theta) <= PHI {
+                if modpi(f64::atan2(y, x), theta) <= phi {
                     let r2 = x * x + y * y;
                     if r2 > R1 * R1 && r2 <= R2 * R2 {
                         self.graph[i][j].add(&[n]);
@@ -247,6 +254,16 @@ impl Graph {
                 }
             }
         }
+        
+        for y in 1..=yd {
+            for x in 1..= xd {
+                if let Some(ref mut vec) = self.graph[y][x].site {
+                    //最小化编号
+                    vec[0] = bvec[vec[0]];
+                }
+            }
+        }
+        
         //返回对照表
         bvec
     }
@@ -262,6 +279,40 @@ impl Graph {
         }
         count as f64/self.x_length as f64/self.y_length as f64
     }
+
+    fn get_condt(&self) -> f64 {
+        let n = self.y_length - 3;
+        let xd = self.x_length - 2;
+        //其中矩阵A的0和n+1行、列为冗余项，仅为保证代码一致性
+        let mut A = vec![vec![0_f64;n+2];n+2];
+        for i in 0..n {
+            A[i][i] = 1.0;
+        }
+        for l in 1..=xd {
+            for r in 2..=n {
+                //横向bond
+                if self.graph[r][l].is_sited() && self.graph[r][l-1].is_sited() {
+                    let B = A.clone();
+                    for i in 1..=n {
+                        for j in 1..=n {
+                            A[i][j] = B[i][j] - B[i][r]*B[r][j]*RES/(1.0+B[r][r]*RES);
+                        }
+                    }
+                }
+            }
+            for r in 1..=n {
+                //纵向bond
+                if self.graph[r][l].is_sited() && self.graph[r+1][l].is_sited() {
+                    A[r][r] += 1.0/RES;
+                    A[r][r+1] += -1.0/RES;
+                    A[r+1][r] += -1.0/RES;
+                    A[r+1][r+1] += 1.0/RES;
+                }
+            }
+        }
+        A[1][1]
+    }
+
 }
 
 //给定两角度[-pi,pi]，求出二者之差，[0,pi]
@@ -277,22 +328,24 @@ fn modpi(theta1: f64, theta2: f64) -> f64 {
 //fn output();
 
 fn main() {
-    let x: u32 = 10240;
-    let y: u32 = 10240;
-    let total = 9;      //每种pc统计次数
+    let x: u32 = 600;
+    let y: u32 = 600;
+    let total = 1;     //每种pc统计次数
     let mut g: Graph;   //二维网格
-    let lmax = 10;
-    let mut pvec: Vec<(f64,f64)> = Vec::with_capacity(lmax);
-    for l in 1..=lmax {
+    let lmax = 6;
+    let mut pvec: Vec<(f64,f64,f64)> = Vec::with_capacity(lmax+1);
+    for l in 0..=lmax {
         let mut pc = 0_f64;
-        let end: usize = l * 1000;
+        let mut sigma = 0_f64;
+        let end: usize = 300 + l*50;
         let mut succeed = 0;
+        let mut rng = Xoshiro256StarStar::seed_from_u64((l*l*(l+1)) as u64);
         for count in 1..=total {
             print!("generating lattice... ");
             g = Graph::new(x as usize, y as usize);
             println!("done");
             print!("initializing random number generator... ");
-            let mut rng = Xoshiro256StarStar::seed_from_u64((count*l*l) as u64);
+            
             println!("done");
             println!("puting circles on the lattice... ");
 
@@ -302,41 +355,51 @@ fn main() {
             println!("done");
             println!("calculating...");
             let bvec = g.find_way(end as Utype);
-            println!("finished calculating, now drawing...");
+            
 
             //绘图
-            let img1 = ImageBuffer::from_fn(x, y, |a, b| {
-                let site = &g.graph[b as usize][a as usize];
-                if let Some(vec1) = site.check() {
-                    match bvec[vec1[0]] {
-                        1 => image::Rgb([0xFF, 0x00, 0x33]), //red
-                        2 => image::Rgb([0x00, 0x33, 0xFF]), //blue
-                        _ => image::Rgb([0x66, 0x33, 0x33]),
+            if true {
+                println!("finished calculating, now drawing...");
+                let img1 = ImageBuffer::from_fn(x, y, |a, b| {
+                    let site = &g.graph[b as usize][a as usize];
+                    if let Some(vec1) = site.check() {
+                        match bvec[vec1[0]] {
+                            1 => image::Rgb([0xFF, 0x00, 0x33]), //red
+                            2 => image::Rgb([0x00, 0x33, 0xFF]), //blue
+                            _ => image::Rgb([0x66, 0x33, 0x33]),
+                        }
+                    } else {
+                        //白背景
+                        image::Rgb([0xFF, 0xFF, 0xFF])
                     }
-                } else {
-                    //白背景
-                    image::Rgb([0xFF, 0xFF, 0xFF])
-                }
-            });
+                });
+                img1.save("./img/img_".to_string() + &l.to_string() + "_" + &count.to_string() + ".png").unwrap();
+            }
+
             //检查上下边界是否连通
             if let Some(vec) = g.graph[y as usize - 2][1].check() {
                 if bvec[vec[0]] == 1 {
                     succeed += 1;
+                    sigma += g.get_condt();
+                } else {
+                    succeed += 0;
+                    sigma += 0.0; //表示不导通时，电导率按0计算
                 }
             }
             pc += g.get_pc();
             println!("finished {}\n", count);
-            img1.save("./img/img".to_string() + &count.to_string() + ".png").unwrap()
+
         }
         let _pc = pc/total as f64;
-        let _pt =  succeed as f64 / total as f64;
-        println!("pc = {:.4}, Probability: {:.4}\n", _pc, _pt);
+        let _pt = succeed as f64 / total as f64;
+        let _sig = sigma / total as f64;
+        println!("pc = {:.4}, Probability: {:.4}, conductivity: {:.4}\n", _pc, _pt, _sig);
         println!("******************************\n");
-        pvec.push((_pc, _pt));
+        pvec.push((_pc, _pt, _sig));
     }
     print!("list:\n pc\tp\n");
-    for (pc, p) in pvec {
-        print!("{:.4}\t{:.4}\n", pc, p);
+    for (pc, p, sigma) in pvec {
+        print!("{:.4}\t{:.4}\t{:.4}\n", pc, p, sigma);
     }
     println!("all finished!\n");
 }

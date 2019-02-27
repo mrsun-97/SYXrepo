@@ -1,0 +1,11 @@
+/home/syx/SYXrepo/vacation_homework/percolation/target/release/deps/libgeneric_array-2b400a8426242e68.rlib: /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/lib.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/hex.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/impls.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/arr.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/functional.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/iter.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/sequence.rs
+
+/home/syx/SYXrepo/vacation_homework/percolation/target/release/deps/generic_array-2b400a8426242e68.d: /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/lib.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/hex.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/impls.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/arr.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/functional.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/iter.rs /home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/sequence.rs
+
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/lib.rs:
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/hex.rs:
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/impls.rs:
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/arr.rs:
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/functional.rs:
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/iter.rs:
+/home/syx/.cargo/registry/src/mirrors.ustc.edu.cn-61ef6e0cd06fb9b8/generic-array-0.12.0/src/sequence.rs:
