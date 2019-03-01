@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018/Arch Linux) (preloaded format=xelatex 2019.2.21)  25 FEB 2019 21:30
+This is XeTeX, Version 3.14159265-2.6-0.99999 (TeX Live 2018/Arch Linux) (preloaded format=xelatex 2019.2.21)  27 FEB 2019 23:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -746,21 +746,91 @@ LaTeX Font Info:    External font `cmex7' loaded for size
 (/usr/share/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
-) [1
+)
+File: shot1.png Graphic file (type bmp)
+<shot1.png>
 
-] (./document.aux)
+Underfull \hbox (badness 10000) in paragraph at lines 29--31
+
+ []
+
+[1
+
+]
+File: img_4_1.png Graphic file (type bmp)
+<img_4_1.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 38--41
+
+ []
+
+[2] [3]
+File: img_6_2.png Graphic file (type bmp)
+<img_6_2.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 42--44
+
+ []
+
+[4
+
+]
+File: img_6_1.png Graphic file (type bmp)
+<img_6_1.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--47
+
+ []
+
+[5
+
+]
+File: img_8_2.png Graphic file (type bmp)
+<img_8_2.png>
+
+Underfull \hbox (badness 10000) in paragraph at lines 48--50
+
+ []
+
+[6
+
+]
+File: fig1.jpg Graphic file (type bmp)
+<fig1.jpg>
+File: fig2.jpg Graphic file (type bmp)
+<fig2.jpg>
+ [7
+
+]
+File: img_2_1.png Graphic file (type bmp)
+<img_2_1.png>
+File: fig3.jpg Graphic file (type bmp)
+<fig3.jpg>
+File: fig4.jpg Graphic file (type bmp)
+<fig4.jpg>
+
+Overfull \hbox (2.33974pt too wide) in paragraph at lines 60--65
+[] []
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 60--65
+
+ []
+
+[8] [9] [10] (./document.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 0.41063pt have occurred.
 
  ) 
 Here is how much of TeX's memory you used:
- 18047 strings out of 492933
- 413132 string characters out of 6138667
- 494287 words of memory out of 5000000
- 21939 multiletter control sequences out of 15000+600000
+ 18140 strings out of 492933
+ 417586 string characters out of 6138667
+ 502287 words of memory out of 5000000
+ 22019 multiletter control sequences out of 15000+600000
  533955 words of font info for 48 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 56i,5n,74p,361b,446s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 56i,6n,74p,472b,446s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on document.pdf (1 page).
+Output written on document.pdf (10 pages).
