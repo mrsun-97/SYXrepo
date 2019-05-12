@@ -12,7 +12,7 @@ int main() {
     int i, n, N2=NUM_TNREADS*NUM_TNREADS;
     int s[NUM_TNREADS];
     data reg[N2];                           //存放正则采样数据
-    n = 64;//rand()%256 + 50;               //数据量大小
+    n = 65;//rand()%256 + 50;               //数据量大小
     A.len = n;
     A.pt = (data*)malloc(n*sizeof(data));
     if(A.pt eqs NULL){
@@ -53,15 +53,15 @@ int main() {
         }
         #pragma omp barrier
 
-        data *t = A.pt + start;
+        data *t = A.pt + start;             //指针t用来遍历数组，开始指向数组首地址
         for(j=1;j<NUM_TNREADS;j++){         //主元划分,写入全局交换矩阵
             //trans[j-1][id].len = 0;
-            trans[j-1][id].pt = t;
+            trans[j-1][id].pt = t;          //该段首地址
             data cmp = reg[j];              //读取主元
-            for( ;*t<cmp;t++){
+            for( ;*t<cmp;t++){              //检查直到有大于该主元的元素，划分出一段
                 //pass
             }
-            trans[j-1][id].len = t-trans[j-1][id].pt;
+            trans[j-1][id].len = t-trans[j-1][id].pt;   //算出该段长度
         }
         trans[NUM_TNREADS-1][id].pt = t;
         trans[NUM_TNREADS-1][id].len = A.pt + end - t;
@@ -69,8 +69,8 @@ int main() {
 
         Vec B;                              //全局交换后每个线程拥有的数据
         B = vec_fuse(trans[id], NUM_TNREADS);
-        #pragma omp atom
-        s[id] = B.len;
+        //#pragma omp atom
+            s[id] = B.len;
         #pragma omp barrier
         for(j=0,t=A.pt;j<id;j++){           //计算新的首地址
             t += s[j];
