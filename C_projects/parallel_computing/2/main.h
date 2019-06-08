@@ -28,7 +28,7 @@ void empty_init(Vec *a, int n){
 
 void rand_init(Vec *a){
     int i, num;
-    num = rand()%40 + 60;
+    num = rand()%40 + 150;
     empty_init(a, num);
     for(i=0;i<num;i++){
         a->pt[i] = rand()%8192-2048;                       

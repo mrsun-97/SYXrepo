@@ -39,7 +39,7 @@ int main() {
 
         int step2 = floorf( (end-start)/(float)NUM_TNREADS );
         for(j=id*NUM_TNREADS,k=0;k<NUM_TNREADS;k++){
-            reg[j+k] = A.pt[start+k*step2]; //正则采样
+            reg[j+k] = A.pt[start+k*step2 + step2/2]; //正则采样
         }
 
         #pragma omp barrier
@@ -47,7 +47,7 @@ int main() {
         {   
             quick_sort(reg, 0, N2-1);       //采样排序
             for(j=1;j<NUM_TNREADS;j++){     //选择主元
-                reg[j] = reg[j*NUM_TNREADS];
+                reg[j] = reg[j*NUM_TNREADS ];
             }
             display(A);
         }
@@ -69,6 +69,11 @@ int main() {
 
         Vec B;                              //全局交换后每个线程拥有的数据
         B = vec_fuse(trans[id], NUM_TNREADS);
+        #pragma omp critical
+        {   
+            printf("%d:", id);
+            display(B);
+        }
         //#pragma omp atom
             s[id] = B.len;
         #pragma omp barrier

@@ -16,11 +16,7 @@ int main(){
     A.pt = NULL;
     Ai.pt = NULL;
     int sendvar[size], sd[size];
-    //MPI_Request req[size];
     MPI_Status stat;
-    // printf("%d init done\n", rank);
-    //empty_init(&Ai, 100);
-    //MPI_Irecv(Ai.pt, 100, MPI_INT, 0, 0, MPI_COMM_WORLD, &stat);
     if(rank eqs 0){
         srand( (unsigned int)time(NULL) );
         Vec send[size];
@@ -30,19 +26,19 @@ int main(){
 
         //分段
         int step = round(A.len/(double)size);
-        if(step*size<A.len) step++;
+        if(step*size<=A.len) step++;
         for(i=0;i<A.len%size;i++){
-            send[i].pt = A.pt+step;
+            //send[i].pt = A.pt+step;
             send[i].len = step;
         }
         for( ;i<size;i++){
-            send[i].pt = A.pt+(step-1);
+            //send[i].pt = A.pt+(step-1);
             send[i].len = step-1;
         }
         for(i=0;i<size;i++){
             sendvar[i] = send[i].len;
         }
-        //send[size-1].len = A.pt + A.len - send[size-1].pt;
+        display(A);
     }
     //发送
     // if(!rank) printf("send start:\n");
@@ -60,12 +56,15 @@ int main(){
     // printf("%d received\n", rank);
     //局部排序
     quick_sort(Ai.pt, 0, Ai.len-1);
+    // display(Ai);
     // printf("%d quicksort done\n", rank);
+    printf("A%d.len = %d\n", rank, Ai.len);
+    MPI_Barrier(MPI_COMM_WORLD);
     data reg[size];
     int step2 = floor(Ai.len/(double)size);
     for(i=0;i<size;i++){
         //正则采样
-        reg[i] = Ai.pt[step2*i];
+        reg[i] = Ai.pt[step2*i+(step2-1)/2];
     }
     
 
@@ -74,8 +73,8 @@ int main(){
     empty_init(&regAll, (rank eqs 0)?size*size:(size-1));
     MPI_Gather(reg, size, MPI_INT, regAll.pt, size, MPI_INT, 0, MPI_COMM_WORLD);
     // printf("%d gather done\n", rank);
+
     //对采样排序
-    // FLUSH
     MPI_Barrier(MPI_COMM_WORLD);
     if(rank eqs 0){
         // printf("rank %d: quick sort\n", rank);
@@ -130,7 +129,7 @@ int main(){
     // printf("%d alltotal done\n", rank);
     // FLUSH
     //归并排序
-    // if(!rank) printf("mergesort:\n");
+    printf("B%d.len = %d\n", rank, Bi.len);
     empty_init(&Ai, Bi.len);
     merge_sort(Bi, Ai.pt);
     //printf("%d mergesort done\n", rank);
